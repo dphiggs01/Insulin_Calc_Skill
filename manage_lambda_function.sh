@@ -13,10 +13,10 @@ SKILL_ZIP=alexa_skill.zip
 
 
 function create_source_zip {
-   cd $SKILLS_FRAMEWORK_DIR
-   zip -r $SKILL_DIR/$SKILL_ZIP *.py *.json
-   cd $SKILL_DIR
-   zip -r $SKILL_DIR/$SKILL_ZIP *.py *.json
+   cp *.py *.json $SKILL_DIR/dist/
+	cd $SKILL_DIR/dist
+   zip -r $SKILL_DIR/$SKILL_ZIP *
+   cd -
 }
 
 function update_function {
@@ -32,7 +32,7 @@ function create_function {
      --function-name $SKILL_NM \
      --runtime python3.6 \
      --role arn:aws:iam::280056172273:role/AlexaLambdaRole \
-     --handler lambda_function.lambda_handler \
+     --handler ask_amy.lambda_function.lambda_handler \
      --description $SKILL_NM \
      --timeout 3 \
      --memory-size 128 \
