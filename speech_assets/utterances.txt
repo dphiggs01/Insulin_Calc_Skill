@@ -1,0 +1,25 @@
+agreeToTerms I {agree}
+agreeToTerms {agree}
+agreeToTerms I would like to hear the terms
+agreeToTerms What are the terms
+agreeToTerms I want to hear the term
+agreeToTerms I want to hear the license agreement
+agreeToTerms license
+agreeToTerms terms
+bgCorrectionWithCarbs What is my insulin dose if my current blood glucose is {current_bg_level}  and i am eating {carbs_being_eaten} carbs 
+bloodGlucoseCorrection Find my blood glucose correction
+bloodGlucoseCorrection What is my blood sugar correction dose
+bloodGlucoseCorrection what is my correction dose if my current level is {requested_value} 
+insulinForCarbConsumption How much insulin do I need if I eat {requested_value} carbs
+insulinForCarbConsumption How much insulin for {requested_value} grams of carbs
+insulinForCarbConsumption How much insulin for {requested_value}  carbs
+insulinForCarbConsumption How many units of insulin for {requested_value} grams of carbs
+insulinForCarbConsumption How much insulin do i need if i eat {requested_value}  carbs
+requestedValue {requested_value} 
+requestedValue The value is {requested_value} 
+requestedValue {requested_value}  carbs
+resetStoredValues Reset the strored values
+resetStoredValues Please reset the stored values
+setCurrentTime the current time is {time} {ampm} 
+setCurrentTime {time} {ampm} 
+setCurrentTime {time} o clock {ampm} 

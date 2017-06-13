@@ -1,0 +1,37 @@
+Ask insulin calculator
+
+Open insulin calculator
+
+Please reset the stored values
+
+What is my blood sugar correction dose?
+
+What is my correction dose if my current level is one hundred?
+
+How much insulin do I need if I eat forty carbs
+
+How many units of insulin for thirty grams of carbs
+
+what is my insulin dose if my current blood glucose is two hundred  and i am eating forty carbs
+
+
+361 rows
+
+one hundred fifty
+one hundred
+thirty five
+
+=== Example profile ===
+Isulin to carb ratio
+Breakfast/am snack 1 unit of insulin for every 6 grams for carbs
+Lunch/pm snack     1 unit of insulin for every 8 grams of carbs
+Dinner/bedtime     1 unit of insulin for every 10 grams of carbs
+
+Correction Factor
+Day time (5a-8p) 1 unit of insulin lowers blood glucode 30 mg/dl -- Target Blood Glucode 100
+Nighttime(8p-5a) 1 unit of insulin lowers blood glucode 35 mg/dl -- Target Blood Glucode 150
+
+Do not correct more frequently than every three hours
+
+
+

@@ -1,0 +1,78 @@
+{
+  "intents": [
+    {
+      "slots": [
+        {
+          "name": "agree",
+          "type": "agree"
+        }
+      ],
+      "intent": "agreeToTerms"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "slots": [
+        {
+          "name": "current_bg_level",
+          "type": "AMAZON.NUMBER"
+        },
+        {
+          "name": "carbs_being_eaten",
+          "type": "AMAZON.NUMBER"
+        }
+      ],
+      "intent": "bgCorrectionWithCarbs"
+    },
+    {
+      "slots": [
+        {
+          "name": "requested_value",
+          "type": "AMAZON.NUMBER"
+        }
+      ],
+      "intent": "bloodGlucoseCorrection"
+    },
+    {
+      "slots": [
+        {
+          "name": "requested_value",
+          "type": "AMAZON.NUMBER"
+        }
+      ],
+      "intent": "insulinForCarbConsumption"
+    },
+    {
+      "slots": [
+        {
+          "name": "requested_value",
+          "type": "AMAZON.NUMBER"
+        }
+      ],
+      "intent": "requestedValue"
+    },
+    {
+      "intent": "resetStoredValues"
+    },
+    {
+      "slots": [
+        {
+          "name": "time",
+          "type": "AMAZON.TIME"
+        },
+        {
+          "name": "ampm",
+          "type": "ampm"
+        }
+      ],
+      "intent": "setCurrentTime"
+    }
+  ]
+}

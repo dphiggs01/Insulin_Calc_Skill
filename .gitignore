@@ -1,0 +1,17 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+#PyCharm
+.idea/
+
+# Setuptools distribution folder.
+/dist/
+
+# Python egg metadata, regenerated from source files by setuptools.
+/*.egg-info
+
+#Files to ignore
+logfile.log
+/skill/diabetes-skill.zip
