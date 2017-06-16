@@ -1,0 +1,38 @@
+{
+  "request": {
+    "session": {
+      "sessionId": "SessionId.c7fd39ec-ee55-418f-9b67-c45225ccfb01",
+      "application": {
+        "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
+      },
+      "attributes": {},
+      "user": {
+        "userId": "amzn1.ask.account.AH5IOJ4HZXJARKXBUSO2JJOVLD2E4XSNXKGIXO6XNFPHXYYH25TNVGF26RLWQWROXHEQEYQXDR52RLWODP4EP62P2VC3IB2522RZPE3IQXJYJHD3RNPC32VDVA4GU44S5YKTT4HXQQLPXWTSF6TVWAF3MRCPZMJYD5X4I6GUTEI2LHNGEYGWHTG23DVSVKCWYX6UODI6LJRSXHY"
+      },
+      "new": true
+    },
+    "request": {
+      "type": "IntentRequest",
+      "requestId": "EdwRequestId.480e857f-7163-40ad-8d67-a2b68dfee919",
+      "locale": "en-US",
+      "timestamp": "2017-06-16T14:26:45Z",
+      "intent": {
+        "name": "resetStoredValues",
+        "slots": {}
+      }
+    },
+    "version": "1.0"
+  },
+  "response": {
+    "version": "1.0",
+    "response": {
+      "outputSpeech": {
+        "type": "PlainText",
+        "text": "OK I have reset the stored values in the insulin calculator."
+      },
+      "shouldEndSession": true
+    },
+    "sessionAttributes": {}
+  }
+}
+

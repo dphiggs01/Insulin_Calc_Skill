@@ -35,58 +35,61 @@
       "agreeToTerms": "agree_to_terms",
       "setCurrentTime": "set_current_time",
       "bgCorrectionWithCarbs": "bg_correction_with_carbs",
-      "AMAZON.HelpIntent": "welcome_request",
+      "AMAZON.HelpIntent": "help_request",
       "AMAZON.CancelIntent": "handle_session_end_request",
       "AMAZON.StopIntent": "handle_session_end_request"
     },
     "slots": {
       "terms_of_use": {
-        "prompt": "In order to use the app you must agree to the terms of use. You may simply say agree, disagree or I would like to hear the terms",
+        "speech_out_ssml": ["In order to use the app you must agree to the terms of use.",
+          "You may simply say agree, disagree or I would like to hear the terms"],
         "re_prompt_text": "Please respond with agree disagree or licence if you want to here the terms",
         "expected_intent": "agree_to_terms"
       },
       "time_adj": {
-        "prompt": "What is the current time. Please state <say-as interpret-as='characters'>am</say-as> or <say-as interpret-as='characters'>pm</say-as> in your response",
+        "speech_out_ssml": ["What is the current time. Please state <say-as interpret-as='characters'>am",
+        "</say-as> or <say-as interpret-as='characters'>pm</say-as> in your response"],
         "expected_intent": "set_current_time"
       },
       "target_bg_level_day": {
-        "prompt": "What is your daytime target blood glucose level?",
+        "speech_out_ssml": "What is your daytime target blood glucose level?",
         "expected_intent": "requested_value_intent"
       },
       "target_bg_level_night": {
-        "prompt": "What is your nighttime target blood glucose level?",
-        "re_prompt_text": "Sorry I did not hear that. could you please respond by ending your respons for example with six carbs or ten carbs",
+        "speech_out_ssml": "What is your nighttime target blood glucose level?",
         "expected_intent": "requested_value_intent"
       },
       "correction_factor_day": {
-        "prompt": "What is your daytime blood glucose correction factor?",
+        "speech_out_ssml": "What is your daytime blood glucose correction factor?",
         "expected_intent": "requested_value_intent"
       },
       "correction_factor_night": {
-        "prompt": "What is your nighttime blood glucose correction factor?",
+        "speech_out_ssml": "What is your nighttime blood glucose correction factor?",
         "expected_intent": "requested_value_intent"
       },
       "carb_ratio_breakfast": {
-        "prompt": "What is the number of carbs in your breakfast or am snack carb ratio?",
-        "re_prompt_text": "Sorry I did not hear that. could you please respond by ending your response with carbs. you can say say six carbs or ten carbs",
+        "speech_out_ssml": "What is the number of carbs in your breakfast or am snack carb ratio?",
         "expected_intent": "requested_value_intent"
       },
       "carb_ratio_lunch": {
-        "prompt": "What is the number of carbs in your lunch or pm snack carb ratio?",
-        "re_prompt_text": "Sorry I did not hear that. could you please respond by ending your response with carbs. you can say six carbs or ten carbs",
+        "speech_out_ssml": "What is the number of carbs in your lunch or pm snack carb ratio?",
         "expected_intent": "requested_value_intent"
       },
       "carb_ratio_dinner": {
-        "prompt": "What is the number of carbs in your dinner or bedtime snack carb ratio?",
-        "re_prompt_text": "Sorry I did not hear that. could you please respond by ending your response with carbs. you can say six carbs or ten carbs",
+        "speech_out_ssml": "What is the number of carbs in your dinner or bedtime snack carb ratio?",
         "expected_intent": "requested_value_intent"
       },
       "current_bg_level": {
-        "prompt": "What is your current blood glucose level?",
+        "speech_out_ssml": "What is your current blood glucose level?",
+        "re_prompt_text": [
+          "Sorry I did not hear that. What is your blood glucose level. ",
+          "This is a number usually greater than eighty and less than three hundred"
+        ],
         "expected_intent": "requested_value_intent"
       },
-      "carbs_being_eaten": {
-        "prompt": "How many carbs will you be eating?",
+      "amt_of_carbs": {
+        "speech_out_ssml": "How many carbs will you be eating?",
+        "re_prompt_text": "Please respond with the number of carbs you will be eating",
         "expected_intent": "requested_value_intent"
       }
     },
@@ -100,6 +103,22 @@
       "re_prompt_text": "How can I help today? ",
       "should_end_session": false
     },
+    "help_request": {
+      "speech_out_ssml": [
+        "<p>The insulin dose calculator helps you simplify your diabetes maintenance. </p>",
+        "<p>You can ask: What is my blood sugar correction dose? or ",
+        "How many units of insulin for thirty grams of carbs? </p>",
+        "<p>You can also combine your requests</p>",
+        "<p> you can do this by asking: Calculate dose with current blood glucose ",
+        "two hundred <break strength='strong'/> and forty grams of carbs </p>",
+        "<break strength='strong'/> ",
+        "<p>To help simplify future calculations The Insulin Calculator will remember a few constant factors ",
+        "like your carb ratios and your correction factors</p>",
+        "<p>To reset these values you can say: Please reset the stored values</p>"
+      ],
+      "re_prompt_text": "How can I help today? ",
+      "should_end_session": false
+    },
     "reset_stored_values": {
       "speech_out_text": "OK I have reset the stored values in the insulin calculator.",
       "should_end_session": true
@@ -109,20 +128,20 @@
       "should_end_session": true
     },
     "handle_session_end_confused": {
-      "card_title": "Session Ended",
       "speech_out_text": "Sorry I am having trouble processing your request. ",
       "should_end_session": true
     },
     "agree_to_terms": {
       "conditions": {
         "listen": {
-          "speech_out_text": [
-            "This application is to be used for information purposes only ",
-            "all calculation provided must be independently confirmed. ",
-            "This tool does not provide medical advice and is not to be used for medical purposes ",
-            "Please respond with agree disagree or I would like to hear the terms"
+          "speech_out_ssml": [
+            "<p>This application is to be used for information purposes <emphasis level='strong'>only</emphasis></p> ",
+            "<p>all calculations provided <emphasis level='strong'>must</emphasis> be independently confirmed. </p> ",
+            "<p>This tool does <emphasis level='strong'> not </emphasis> provide medical advice ",
+            "and is <emphasis level='strong'> not </emphasis> to be used for medical purposes. </p>",
+            "<p>Please respond with agree disagree or I would like to hear the terms.</p>"
           ],
-          "re_prompt_text": "Sorry I did not hear that. {} ",
+          "re_prompt_text": "Sorry I did not hear that.",
           "should_end_session": false
         },
         "disagree": {
@@ -153,7 +172,7 @@
           "speech_out_text": [
             "The current time is {current_time} ",
             "Your current blood glucose level is {current_bg_level}. ",
-            "You are consuming {carbs_being_eaten} carbs. ",
+            "You are consuming {amt_of_carbs} carbs. ",
             "Your {day_night}time target blood glucose level is {target_bg_level}. ",
             "Your {day_night}time correction factor is {correction_factor}. ",
             "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. ",
@@ -165,7 +184,7 @@
           "card_title": "Blood Glucose Correction",
           "speech_out_text": [
             "Your current blood glucose level is {current_bg_level}. ",
-            "You are consuming {carbs_being_eaten} carbs. ",
+            "You are consuming {amt_of_carbs} carbs. ",
             "Your {day_night}time target  blood glucose level is {target_bg_level}. ",
             "Your {day_night}time correction factor is {correction_factor}. ",
             "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. ",
@@ -215,7 +234,7 @@
         "dose": {
           "card_title": "Insulin for Carb Consumption",
           "speech_out_text": [
-            "You are consuming {carbs_being_eaten} carbs. ",
+            "You are consuming {amt_of_carbs} carbs. ",
             "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. ",
             "You need {correction} units of insulin.  "
           ],
@@ -224,7 +243,7 @@
         "no_dose": {
           "card_title": "Insulin for Carb Consumption",
           "speech_out_text": [
-            "You are consuming {carbs_being_eaten} carbs. ",
+            "You are consuming {amt_of_carbs} carbs. ",
             "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. ",
             "You do not need a correction dose."
           ],

@@ -1,14 +1,20 @@
 import logging
 import datetime
-from ask_amy.default_dialog import DefaultDialog
-from ask_amy.reply import Reply, Response, Card, Prompt
+from ask_amy.core.default_dialog import DefaultDialog
+from ask_amy.core.reply import Reply, Response, Card, Prompt
 
-from ask_amy.time_of_day import TimeOfDay
+from ask_amy.utilities.time_of_day import TimeOfDay
 
 logger = logging.getLogger()
 
 
 class DiabetesDialog(DefaultDialog):
+
+    def launch_request(self, method_name=None):
+        logger.debug("**************** entering DiabetesDialog.launch_request")
+        return self.execute_method('welcome_request')
+
+
     def blood_glucose_correction(self, method_name=None):
         logger.debug('**************** entering DiabetesDialog.{}'.format(method_name))
         intent_dict = self.get_intent_details(method_name)
@@ -18,7 +24,7 @@ class DiabetesDialog(DefaultDialog):
             return self.handle_session_end_confused()
 
         # 2. See if we got any slots filled
-        self.map_requested_value(from_initial_utterance='current_bg_level')
+        self._event.slot_data_to_session_attributes()
 
         # 3. See if we have all the data we need
         required_fields = ['terms_of_use', 'time_adj', 'current_bg_level', 'target_bg_level_' + self.day_night_prefix(),
@@ -60,10 +66,10 @@ class DiabetesDialog(DefaultDialog):
             return self.handle_session_end_confused()
 
         # 2. See if we got any slots filled
-        self.map_requested_value(from_initial_utterance='carbs_being_eaten')
+        self._event.slot_data_to_session_attributes()
 
         # 3. See if we have all the data we need
-        required_fields = ['terms_of_use', 'time_adj', 'carbs_being_eaten', 'carb_ratio_' + self.mealtime_prefix()]
+        required_fields = ['terms_of_use', 'time_adj', 'amt_of_carbs', 'carb_ratio_' + self.mealtime_prefix()]
         reply_dict = self.required_fields_process(required_fields)
         if reply_dict is not None:
             return reply_dict
@@ -79,9 +85,9 @@ class DiabetesDialog(DefaultDialog):
         return Reply.build(reply_intent_dict, self.event().session())
 
     def calc_insulin_for_carb_consumption(self):
-        carbs_being_eaten = self.event().get_value_in_session(['carbs_being_eaten'])
+        amt_of_carbs = self.event().get_value_in_session(['amt_of_carbs'])
         carb_ratio = self.event().get_value_in_session(['carb_ratio_' + self.mealtime_prefix()])
-        correction = int(round(float(carbs_being_eaten) / float(carb_ratio), 0))
+        correction = int(round(float(amt_of_carbs) / float(carb_ratio), 0))
         self.event().set_value_in_session("mealtime", self.mealtime_prefix())
         self.event().set_value_in_session("carb_ratio", carb_ratio)
         self.event().set_value_in_session("correction", correction)
@@ -96,15 +102,9 @@ class DiabetesDialog(DefaultDialog):
             return self.handle_session_end_confused()
 
         # 2. See if we got any slots filled
-        carbs_being_eaten = self.event().value_for_slot_name('carbs_being_eaten')
-        if carbs_being_eaten is not None:
-            self.event().set_value_in_session('carbs_being_eaten', carbs_being_eaten)
+        self._event.slot_data_to_session_attributes()
 
-        current_bg_level = self.event().value_for_slot_name('current_bg_level')
-        if current_bg_level is not None:
-            self.event().set_value_in_session('current_bg_level', current_bg_level)
-
-        required_fields = ['terms_of_use', 'time_adj', 'carbs_being_eaten', 'current_bg_level',
+        required_fields = ['terms_of_use', 'time_adj', 'amt_of_carbs', 'current_bg_level',
                            'target_bg_level_' + self.day_night_prefix(),
                            'correction_factor_' + self.day_night_prefix(), 'carb_ratio_' + self.mealtime_prefix()]
 
@@ -154,7 +154,7 @@ class DiabetesDialog(DefaultDialog):
             return self.handle_session_end_confused()
 
         # 2. See if we got any slots filled
-        requested_value = self.event().value_for_slot_name('agree')
+        requested_value = self.event().value_for_slot_name('terms_of_use')
 
         # 3. See if we have all the data we need
         # 4. Request data if needed
@@ -202,12 +202,14 @@ class DiabetesDialog(DefaultDialog):
             return Reply.build(intent_dict['conditions']['retry'], self.event().session())
 
     def welcome_request(self, method_name=None):
-        """ If we wanted to initialize the session to have some attributes we could
-        add those here
-
-        Args:
-            method_name:
+        """ Play welcome message and wait for a response
         """
+        return self.handle_default_intent(method_name)
+
+    def help_request(self, method_name=None):
+        """ Reset any establish conversation and play help message
+        """
+        self.reset_established_dialog()
         return self.handle_default_intent(method_name)
 
     def reset_stored_values(self, method_name=None):
@@ -224,27 +226,17 @@ class DiabetesDialog(DefaultDialog):
         # can we re_prompt?
         retry_attempted = self.event().get_value_in_session(["retry_attempted"])
         if retry_attempted is None:
-            requested_value = self.event().get_value_in_session(['requested_value'])
-            if requested_value:
-                re_prompt = self.get_re_prompt_for_data(requested_value)
-                if re_prompt:
-                    prompt = Prompt.ssml(re_prompt)
-                    reprompt = Prompt.ssml("Sorry I did not hear that. {}".format(re_prompt))
-                    card = Card.simple("Redirect", re_prompt)
-                    set_should_end_session = False
-                    response = Response.constr(prompt, reprompt, card, set_should_end_session)
-                    self.event().set_value_in_session("retry_attempted", True)
-                    reply = Reply.constr(response, self.event().session())
-                    return reply.json()
+            prompt_dict = {"speech_out_text": "Could you please repeat or say help.",
+                          "should_end_session": False}
+            requested_value_nm = self.event().get_value_in_session(['requested_value_nm'])
+            if requested_value_nm is not None:
+                prompt_dict = self.get_re_prompt_for_slot_data(requested_value_nm)
 
-        # we are done
-        established_dialog = self.peek_established_dialog()
-        # print("established_dialog {}".format(established_dialog))
-        text = 'no intent set'
-        if established_dialog:
-            text = established_dialog.replace("_", " ")
-        self.event().set_value_in_session('confused', text)
-        return self.handle_default_intent(method_name)
+            self.event().set_value_in_session("retry_attempted", True)
+            return Reply.build(prompt_dict, self.event().session())
+        else:
+            # we are done
+            return self.handle_default_intent(method_name='handle_session_end_confused')
 
     # --------------- Helper Methods
 
@@ -258,15 +250,6 @@ class DiabetesDialog(DefaultDialog):
             self.push_established_dialog(method_name)
         return state_good
 
-    def map_requested_value(self, from_initial_utterance):
-        requested_name = self.event().get_value_in_session(['requested_value'])
-        requested_value = self.event().value_for_slot_name('requested_value')
-        if requested_value is not None:
-            if requested_name is not None:
-                self.event().set_value_in_session(requested_name, requested_value)
-            else:
-                self.event().set_value_in_session(from_initial_utterance, requested_value)
-
     def required_fields_process(self, required_fields):
         reply_dict = None
         for key in required_fields:
@@ -279,13 +262,10 @@ class DiabetesDialog(DefaultDialog):
                 logger.debug("      none condition key={}".format(key))
                 expected_intent = self.get_expected_intent_for_data(key)
                 self.push_established_dialog(expected_intent)
-                self.event().set_value_in_session('requested_value', key)
-                speech_output = self.get_prompt_for_data(key)
-                prompt = Prompt.ssml(speech_output)
-                reprompt = Prompt.ssml("Sorry I did not hear that. {}".format(speech_output))
-                response = Response.constr(prompt, reprompt, card=None, should_end_session=False)
-                reply = Reply.constr(response, self.event().get_session_attributes())
-                reply_dict = reply.json()
+                self.event().set_value_in_session('requested_value_nm', key)
+
+                reply_slot_dict = self.get_slot_data_details(key)
+                return Reply.build(reply_slot_dict, self.event().session())
 
         return reply_dict
 
@@ -307,5 +287,7 @@ class DiabetesDialog(DefaultDialog):
         return prefix
 
     def execute_method(self, method_name):
+        """ Execute a method in this class given its name
+        """
         method = getattr(self, method_name)
         return method(method_name)

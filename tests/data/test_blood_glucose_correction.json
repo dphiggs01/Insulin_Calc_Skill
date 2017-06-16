@@ -1,0 +1,69 @@
+{ "request":
+{
+  "session": {
+    "sessionId": "SessionId.066e21c5-6af2-4d2c-84b3-88c796e5f520",
+    "application": {
+      "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
+    },
+    "attributes": {
+      "carb_ratio_breakfast": "6",
+      "target_bg_level_day": "100",
+      "time_adj": "4",
+      "terms_of_use": "agree",
+      "correction_factor_day": "30"
+    },
+    "user": {
+      "userId": "amzn1.ask.account.AH5IOJ4HZXJARKXBUSO2JJOVLD2E4XSNXKGIXO6XNFPHXYYH25TNVGF26RLWQWROXHEQEYQXDR52RLWODP4EP62P2VC3IB2522RZPE3IQXJYJHD3RNPC32VDVA4GU44S5YKTT4HXQQLPXWTSF6TVWAF3MRCPZMJYD5X4I6GUTEI2LHNGEYGWHTG23DVSVKCWYX6UODI6LJRSXHY"
+    },
+    "new": false
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.098ec752-e4aa-4d5a-bc0d-33d1818b2547",
+    "locale": "en-US",
+    "timestamp": "2017-06-16T14:11:50Z",
+    "intent": {
+      "name": "bloodGlucoseCorrection",
+      "slots": {
+        "current_bg_level": {
+          "name": "current_bg_level"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
+
+, "response":
+
+{
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak>What is your current blood glucose level?</speak>"
+    },
+    "reprompt": {
+      "outputSpeech": {
+        "type": "PlainText",
+        "text": "Sorry I did not hear that. What is your blood glucose level. This is a number usually greater than eighty and less that three hundred"
+      }
+    },
+    "shouldEndSession": false
+  },
+  "sessionAttributes": {
+    "established_conversation": [
+      "blood_glucose_correction",
+      "requested_value_intent"
+    ],
+    "carb_ratio_breakfast": "6",
+    "target_bg_level_day": "100",
+    "time_adj": "4",
+    "terms_of_use": "agree",
+    "requested_value_nm": "current_bg_level",
+    "correction_factor_day": "30"
+  }
+}
+
+}
+

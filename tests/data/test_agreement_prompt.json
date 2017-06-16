@@ -1,0 +1,56 @@
+{ "request":
+{
+  "session": {
+    "sessionId": "SessionId.8c881e7f-3957-4d23-b0ed-562e50ba7693",
+    "application": {
+      "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
+    },
+    "attributes": {},
+    "user": {
+      "userId": "amzn1.ask.account.AH5IOJ4HZXJARKXBUSO2JJOVLD2E4XSNXKGIXO6XNFPHXYYH25TNVGF26RLWQWROXHEQEYQXDR52RLWODP4EP62P2VC3IB2522RZPE3IQXJYJHD3RNPC32VDVA4GU44S5YKTT4HXQQLPXWTSF6TVWAF3MRCPZMJYD5X4I6GUTEI2LHNGEYGWHTG23DVSVKCWYX6UODI6LJRSXHY"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.a09c888b-4cf8-4a60-ae91-bc426e95dde0",
+    "locale": "en-US",
+    "timestamp": "2017-06-16T14:32:02Z",
+    "intent": {
+      "name": "bloodGlucoseCorrection",
+      "slots": {
+        "current_bg_level": {
+          "name": "current_bg_level"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
+
+, "response":
+{
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak>In order to use the app you must agree to the terms of use. You may simply say agree, disagree or I would like to hear the terms</speak>"
+    },
+    "reprompt": {
+      "outputSpeech": {
+        "type": "PlainText",
+        "text": "Please respond with agree disagree or licence if you want to here the terms"
+      }
+    },
+    "shouldEndSession": false
+  },
+  "sessionAttributes": {
+    "established_conversation": [
+      "blood_glucose_correction",
+      "agree_to_terms"
+    ],
+    "requested_value_nm": "terms_of_use"
+  }
+}
+}
+

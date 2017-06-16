@@ -5,19 +5,38 @@
 
 #assume the current directory name is the name for the skill function
 SKILL_NM=${PWD##*/}
-
 SKILL_DIR=${PWD}
-SKILLS_FRAMEWORK_DIR=../../skill_fwk
 
+SKILL_ROLE=arn:aws:iam::280056172273:role/AlexaLambdaRole
+SKILL_HANDLER=ask_amy.lambda_function.lambda_handler
 SKILL_ZIP=alexa_skill.zip
 
 
+function copy_local_ask_amy {
+	echo "Copying local version of ask_amy"
+   rm -rf  $SKILL_DIR/dist/ask_amy
+   cp -r  ../ask_amy/ask_amy $SKILL_DIR/dist
+}
+
+function install_ask_amy {
+	echo "installing latest pip version of ask_amy"
+	rm -rf  $SKILL_DIR/dist/*
+   pip install --upgrade ask_amy -t $SKILL_DIR/dist/
+}
+
 function create_source_zip {
+	echo "Zip content"
    cp *.py *.json $SKILL_DIR/dist/
 	cd $SKILL_DIR/dist
-   zip -r $SKILL_DIR/$SKILL_ZIP *
+	if [ -e  $SKILL_DIR/$SKILL_ZIP ]
+	then
+   	 rm $SKILL_DIR/$SKILL_ZIP
+   fi
+   zip -rq $SKILL_DIR/$SKILL_ZIP *
    cd -
 }
+
+
 
 function update_function {
   aws lambda update-function-code \
@@ -31,8 +50,8 @@ function create_function {
   aws lambda create-function \
      --function-name $SKILL_NM \
      --runtime python3.6 \
-     --role arn:aws:iam::280056172273:role/AlexaLambdaRole \
-     --handler ask_amy.lambda_function.lambda_handler \
+     --role $SKILL_ROLE \
+     --handler $SKILL_HANDLER \
      --description $SKILL_NM \
      --timeout 3 \
      --memory-size 128 \
@@ -48,21 +67,30 @@ function add_trigger {
      --principal "alexa-appkit.amazon.com"
 }  
 
+function main {
 
-#create the source zip file
-create_source_zip
+   if [[ "$1" == "DEV" ]]; then
+       copy_local_ask_amy
+   else
+       install_ask_amy
+   fi
+   #create the source zip file
+   create_source_zip
 
-#attempt to update the lambda function
-update_function
+   #attempt to update the lambda function
+   update_function
 
-#if update fails assume you need to create the function
-if [ "$?" != "0" ]; then
-   echo '  '
-	echo CREATING FUNCTION $SKILL_NM
-   echo ' '
-   create_function
-   add_trigger
-else
-	echo UPDATING FUNCTION $SKILL_NM
-fi
+   #if update fails assume you need to create the function
+   if [ "$?" != "0" ]; then
+      echo '  '
+	   echo CREATING FUNCTION $SKILL_NM
+      echo ' '
+      create_function
+      add_trigger
+   else
+	   echo UPDATING FUNCTION $SKILL_NM
+   fi
+}
+
+main $1
 

@@ -1,0 +1,63 @@
+{ "request":
+
+{
+  "session": {
+    "sessionId": "SessionId.8c881e7f-3957-4d23-b0ed-562e50ba7693",
+    "application": {
+      "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
+    },
+    "attributes": {
+      "established_conversation": [
+        "blood_glucose_correction",
+        "agree_to_terms"
+      ],
+      "requested_value_nm": "terms_of_use"
+    },
+    "user": {
+      "userId": "amzn1.ask.account.AH5IOJ4HZXJARKXBUSO2JJOVLD2E4XSNXKGIXO6XNFPHXYYH25TNVGF26RLWQWROXHEQEYQXDR52RLWODP4EP62P2VC3IB2522RZPE3IQXJYJHD3RNPC32VDVA4GU44S5YKTT4HXQQLPXWTSF6TVWAF3MRCPZMJYD5X4I6GUTEI2LHNGEYGWHTG23DVSVKCWYX6UODI6LJRSXHY"
+    },
+    "new": false
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.09a09e3d-8f08-4931-ad65-2727de729a23",
+    "locale": "en-US",
+    "timestamp": "2017-06-16T14:33:58Z",
+    "intent": {
+      "name": "agreeToTerms",
+      "slots": {
+        "terms_of_use": {
+          "name": "terms_of_use"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
+
+, "response":
+{
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak><p>This application is to be used for information purposes <emphasis level='strong'>only</emphasis></p> <p>all calculations provided <emphasis level='strong'>must</emphasis> be independently confirmed. </p> <p>This tool does <emphasis level='strong'> not </emphasis> provide medical advice and is <emphasis level='strong'> not </emphasis> to be used for medical purposes. </p><p>Please respond with agree disagree or I would like to hear the terms.</p></speak>"
+    },
+    "reprompt": {
+      "outputSpeech": {
+        "type": "PlainText",
+        "text": "Sorry I did not hear that."
+      }
+    },
+    "shouldEndSession": false
+  },
+  "sessionAttributes": {
+    "established_conversation": [
+      "blood_glucose_correction",
+      "agree_to_terms"
+    ],
+    "requested_value_nm": "terms_of_use"
+  }
+}
+}
+

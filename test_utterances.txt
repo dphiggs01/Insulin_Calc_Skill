@@ -8,11 +8,13 @@ What is my blood sugar correction dose?
 
 What is my correction dose if my current level is one hundred?
 
-How much insulin do I need if I eat forty carbs
+How much insulin do I need if I eat forty grams of carbs
 
 How many units of insulin for thirty grams of carbs
 
 what is my insulin dose if my current blood glucose is two hundred  and i am eating forty carbs
+
+calculate dose with current blood glucose two hundred and one hundred grams of carbs
 
 
 361 rows

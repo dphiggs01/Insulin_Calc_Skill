@@ -1,0 +1,48 @@
+{ "request":
+{
+  "session": {
+    "sessionId": "SessionId.066e21c5-6af2-4d2c-84b3-88c796e5f520",
+    "application": {
+      "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
+    },
+    "attributes": {},
+    "user": {
+      "userId": "amzn1.ask.account.AH5IOJ4HZXJARKXBUSO2JJOVLD2E4XSNXKGIXO6XNFPHXYYH25TNVGF26RLWQWROXHEQEYQXDR52RLWODP4EP62P2VC3IB2522RZPE3IQXJYJHD3RNPC32VDVA4GU44S5YKTT4HXQQLPXWTSF6TVWAF3MRCPZMJYD5X4I6GUTEI2LHNGEYGWHTG23DVSVKCWYX6UODI6LJRSXHY"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "LaunchRequest",
+    "requestId": "EdwRequestId.b0324693-b555-463b-8bf2-570c24533d8c",
+    "locale": "en-US",
+    "timestamp": "2017-06-16T13:35:33Z"
+  },
+  "version": "1.0"
+}
+
+, "response":
+{
+  "version": "1.0",
+  "response": {
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "Welcome to the insulin dose calculator. Here you can get information simplifying your diabetes maintenance. You can ask: What is my blood sugar correction dose? or How many units of insulin for thirty grams of carbs?"
+    },
+    "reprompt": {
+      "outputSpeech": {
+        "type": "PlainText",
+        "text": "How can I help today? "
+      }
+    },
+    "shouldEndSession": false
+  },
+  "sessionAttributes": {
+    "carb_ratio_breakfast": "6",
+    "target_bg_level_day": "100",
+    "time_adj": "4",
+    "terms_of_use": "agree",
+    "correction_factor_day": "30"
+  }
+}
+}
+
