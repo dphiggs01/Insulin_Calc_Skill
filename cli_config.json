@@ -1,0 +1,18 @@
+{
+  "skill_name": "insulin_calc_skill",
+  "skill_home_dir": "/Users/danhiggins/Code/AWS/alexa/insulin_calc_skill",
+  "aws_region": "us-east-1",
+  "aws_profile": "adminuser",
+  "aws_role": "arn:aws:iam::280056172273:role/AlexaLambdaRole",
+
+  "lambda_runtime": "python3.6",
+  "lambda_handler": "ask_amy.lambda_function.lambda_handler",
+  "lambda_timeout": "3",
+  "lambda_memory": "128",
+  "lambda_zip": "alexa_skill.zip",
+
+  "ask_amy_dev": "yes",
+  "ask_amy_home_dir": "/Users/danhiggins/Code/AWS/alexa/ask_amy"
+}
+
+

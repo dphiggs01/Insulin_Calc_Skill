@@ -1,6 +1,3 @@
-import os
-import json
-import unittest
 import logging
 from tests.test_alexa_skill_base import TestAlexaSkillBase
 from ask_amy.core.skill_factory import SkillFactory
