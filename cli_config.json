@@ -1,8 +1,8 @@
 {
   "skill_name": "insulin_calc_skill",
-  "skill_home_dir": "/Users/danhiggins/Code/AWS/alexa/insulin_calc_skill",
+  "skill_home_dir": ".",
   "aws_region": "us-east-1",
-  "aws_profile": "adminuser",
+  "aws_profile": "default",
   "aws_role": "arn:aws:iam::280056172273:role/AlexaLambdaRole",
 
   "lambda_runtime": "python3.6",

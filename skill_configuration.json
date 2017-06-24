@@ -21,12 +21,7 @@
   },
   "Dialog": {
     "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47",
-    "requestControl": {
-      "NewSession": "new_session_started",
-      "LaunchRequest": "launch_request",
-      "IntentRequest": "intent_request",
-      "SessionEndedRequest": "session_ended_request"
-    },
+
     "intentControl": {
       "bloodGlucoseCorrection": "blood_glucose_correction",
       "insulinForCarbConsumption": "insulin_for_carb_consumption",
