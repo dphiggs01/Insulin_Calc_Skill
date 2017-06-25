@@ -1,19 +1,42 @@
 import logging
 import datetime
 from ask_amy.core.default_dialog import DefaultDialog
-from ask_amy.core.reply import Reply, Response, Card, Prompt
-
+from ask_amy.core.reply import Reply
 from ask_amy.utilities.time_of_day import TimeOfDay
+from ask_amy.utilities.account_link import AmazonProfile
+from zip_code_db import ZipcodeDB
 
 logger = logging.getLogger()
 
 
 class DiabetesDialog(DefaultDialog):
 
+    def new_session_started(self, method_name=None):
+        logger.debug("**************** entering DiabetesDialog.new_session_started")
+        # If we do not have a time adj offset see if we can derive one from timezone
+        time_adj = self.session.get_attribute(['time_adj'])
+        if time_adj is None:
+            timezone = self.session.get_attribute(['time_zone'])
+            # If we do not have a timezone see if we have access to the amazon profile to get one
+            if timezone is None:
+                access_token = self.session.access_token()
+                if access_token is not None:
+                    amazon_profile =  AmazonProfile(access_token)
+                    zip_code = amazon_profile.get_zip_code()
+                    zip_code_db = ZipcodeDB()
+                    timezone = zip_code_db.get_timezone_for_zip_code(zip_code)
+                    self.session.put_attribute('time_zone', timezone)
+
+            if timezone is not None:
+                time_adj = TimeOfDay.time_adj_given_tz(timezone)
+                if time_adj is not None:
+                    self.session.put_attribute('time_adj', time_adj)
+
+
     def launch_request(self, method_name=None):
         logger.debug("**************** entering DiabetesDialog.launch_request")
-        return self.execute_method('welcome_request')
 
+        return self.execute_method('welcome_request')
 
     def blood_glucose_correction(self, method_name=None):
         logger.debug('**************** entering DiabetesDialog.{}'.format(method_name))
@@ -27,7 +50,7 @@ class DiabetesDialog(DefaultDialog):
         self.event.slot_data_to_session_attributes()
 
         # 3. See if we have all the data we need
-        required_fields = ['terms_of_use', 'time_adj', 'current_bg_level', 'target_bg_level_' + self.day_night_prefix(),
+        required_fields = ['time_adj', 'current_bg_level', 'target_bg_level_' + self.day_night_prefix(),
                            'correction_factor_' + self.day_night_prefix()]
 
         reply_dict = self.required_fields_process(required_fields)
@@ -69,7 +92,7 @@ class DiabetesDialog(DefaultDialog):
         self.event.slot_data_to_session_attributes()
 
         # 3. See if we have all the data we need
-        required_fields = ['terms_of_use', 'time_adj', 'amt_of_carbs', 'carb_ratio_' + self.mealtime_prefix()]
+        required_fields = ['time_adj', 'amt_of_carbs', 'carb_ratio_' + self.mealtime_prefix()]
         reply_dict = self.required_fields_process(required_fields)
         if reply_dict is not None:
             return reply_dict
@@ -104,7 +127,7 @@ class DiabetesDialog(DefaultDialog):
         # 2. See if we got any slots filled
         self._event.slot_data_to_session_attributes()
 
-        required_fields = ['terms_of_use', 'time_adj', 'amt_of_carbs', 'current_bg_level',
+        required_fields = ['time_adj', 'amt_of_carbs', 'current_bg_level',
                            'target_bg_level_' + self.day_night_prefix(),
                            'correction_factor_' + self.day_night_prefix(), 'carb_ratio_' + self.mealtime_prefix()]
 

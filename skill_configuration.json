@@ -6,7 +6,7 @@
   },
   "Session": {
     "persistence": true,
-    "tableName": "Bolus",
+    "tableName": "InsulinCalc",
     "fieldsToPersist": [
       "target_bg_level_day",
       "target_bg_level_night",
@@ -16,12 +16,12 @@
       "carb_ratio_lunch",
       "carb_ratio_dinner",
       "terms_of_use",
-      "time_adj"
+      "time_adj",
+      "time_zone"
     ]
   },
   "Dialog": {
     "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47",
-
     "intentControl": {
       "bloodGlucoseCorrection": "blood_glucose_correction",
       "insulinForCarbConsumption": "insulin_for_carb_consumption",
@@ -37,15 +37,15 @@
     "slots": {
       "terms_of_use": {
         "speech_out_ssml": [
-          "In order to use the app you must agree to the terms of use. ",
+          "In order to use the app, you must agree to the terms of use. ",
           "You may simply say agree, disagree or I would like to hear the terms"
         ],
-        "re_prompt_text": "Please respond with agree disagree or licence if you want to here the terms",
+        "re_prompt_text": "Please respond with agree, disagree or license if you want to here the terms.",
         "expected_intent": "agree_to_terms"
       },
       "time_adj": {
         "speech_out_ssml": [
-          "What is the current time. Please state <say-as interpret-as='characters'>am",
+          "What is the current time? Please state <say-as interpret-as='characters'>am",
           "</say-as> or <say-as interpret-as='characters'>pm</say-as> in your response"
         ],
         "expected_intent": "set_current_time"
@@ -105,13 +105,13 @@
     "help_request": {
       "speech_out_ssml": [
         "<p>The insulin dose calculator helps you simplify your diabetes maintenance. </p>",
-        "<p>You can ask: What is my blood sugar correction dose? or ",
-        "How many units of insulin for thirty grams of carbs? </p>",
-        "<p>You can also combine your requests</p>",
-        "<p> you can do this by asking: Calculate dose with current blood glucose ",
-        "two hundred <break strength='strong'/> and forty grams of carbs </p>",
+        "<p>You can ask: What is my blood sugar correction dose? Or ",
+        "how many units of insulin for thirty grams of carbs? </p>",
+        "<p>You can also combine your requests. </p>",
+        "<p> You can do this by asking: Calculate dose with current blood glucose ",
+        "two hundred <break strength='strong'/> and forty grams of carbs. </p>",
         "<break strength='strong'/> ",
-        "<p>To help simplify future calculations The Insulin Calculator will remember a few constant values ",
+        "<p>To help simplify future calculations, The Insulin Calculator will remember a few constant values ",
         "like your carb ratios and your correction factors</p>",
         "<p>To reset these values you can say: Please reset the stored values</p>",
         "<p>What would you like to do?</p>"
@@ -128,7 +128,7 @@
           "two hundred and forty grams of carbs. \n\n",
           "To help simplify future calculations, the Insulin Calculator will remember a few constant values ",
           "like your carb ratios and your correction factors. \n\n",
-          "To reset these values you can say: Please reset the stored values."
+          "To reset these values, you can say: Please reset the stored values."
         ],
         "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480.png",
         "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800.png"
@@ -184,9 +184,7 @@
     "bg_correction_with_carbs": {
       "conditions": {
         "dose": {
-          "card_title": "Blood Glucose Correction",
           "speech_out_text": [
-            "The current time is {current_time} ",
             "Your current blood glucose level is {current_bg_level}. ",
             "You are consuming {amt_of_carbs} carbs. ",
             "Your {day_night}time target blood glucose level is {target_bg_level}. ",
@@ -194,10 +192,22 @@
             "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. ",
             "Your correction dose is {correction} units of insulin."
           ],
+          "card": {
+            "title": "Blood Glucose Correction with carbs",
+            "content": [
+              "Your current blood glucose level is {current_bg_level}. \n",
+              "You are consuming {amt_of_carbs} carbs. \n",
+              "Your {day_night}time target blood glucose level is {target_bg_level}. \n",
+              "Your {day_night}time correction factor is {correction_factor}. \n",
+              "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. \n\n",
+              "Your correction dose is {correction} units of insulin."
+            ],
+            "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480.png",
+            "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800.png"
+          },
           "should_end_session": true
         },
         "no_dose": {
-          "card_title": "Blood Glucose Correction",
           "speech_out_text": [
             "Your current blood glucose level is {current_bg_level}. ",
             "You are consuming {amt_of_carbs} carbs. ",
@@ -206,6 +216,19 @@
             "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. ",
             "You do not need a correction dose at this time."
           ],
+          "card": {
+            "title": "Blood Glucose Correction with carbs",
+            "content": [
+              "Your current blood glucose level is {current_bg_level}. \n",
+              "You are consuming {amt_of_carbs} carbs. \n",
+              "Your {day_night}time target  blood glucose level is {target_bg_level}. \n",
+              "Your {day_night}time correction factor is {correction_factor}. \n",
+              "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. \n\n",
+              "You do not need a correction dose at this time."
+            ],
+            "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480.png",
+            "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800.png"
+          },
           "should_end_session": true
         },
         "retry": {
@@ -218,7 +241,6 @@
     "blood_glucose_correction": {
       "conditions": {
         "dose": {
-          "card_title": "Blood Glucose Correction",
           "speech_out_text": [
             "Your current blood glucose level is {current_bg_level}. ",
             "Your {day_night}time target blood glucose level is {target_bg_level}. ",
@@ -228,20 +250,17 @@
           "card": {
             "title": "Blood Glucose Correction",
             "content": [
-            "Your current blood glucose level is {current_bg_level}. ",
-            "Your {day_night}time target blood glucose level is {target_bg_level}. ",
-            "Your {day_night}time correction factor is {correction_factor}. ",
-            "Your correction dose is {correction} units of insulin."
+              "Your current blood glucose level is {current_bg_level}. \n",
+              "Your {day_night}time target blood glucose level is {target_bg_level}. \n",
+              "Your {day_night}time correction factor is {correction_factor}. \n\n",
+              "Your correction dose is {correction} units of insulin."
             ],
             "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480.png",
             "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800.png"
           },
-
-
           "should_end_session": true
         },
         "no_dose": {
-          "card_title": "Blood Glucose Correction",
           "speech_out_text": [
             "Your current blood glucose level is {current_bg_level}. ",
             "Your {day_night}time target  blood glucose level is {target_bg_level}. ",
@@ -249,17 +268,16 @@
             "You do not need a correction dose at this time."
           ],
           "card": {
-            "title": "",
+            "title": "Blood Glucose Correction",
             "content": [
-            "Your current blood glucose level is {current_bg_level}. ",
-            "Your {day_night}time target  blood glucose level is {target_bg_level}. ",
-            "Your {day_night}time correction factor is {correction_factor}. ",
-            "You do not need a correction dose at this time."
+              "Your current blood glucose level is {current_bg_level}. \n",
+              "Your {day_night}time target  blood glucose level is {target_bg_level}. \n",
+              "Your {day_night}time correction factor is {correction_factor}. \n\n",
+              "You do not need a correction dose at this time."
             ],
             "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480.png",
             "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800.png"
           },
-
           "should_end_session": true
         },
         "retry": {
@@ -280,8 +298,8 @@
           "card": {
             "title": "Insulin for Carb Consumption",
             "content": [
-              "You are consuming {amt_of_carbs} carbs. ",
-              "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. ",
+              "You are consuming {amt_of_carbs} carbs. \n",
+              "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. \n\n",
               "You need {correction} units of insulin.  "
             ],
             "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480.png",
@@ -298,8 +316,8 @@
           "card": {
             "title": "Insulin for Carb Consumption",
             "content": [
-              "You are consuming {amt_of_carbs} carbs. ",
-              "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. ",
+              "You are consuming {amt_of_carbs} carbs. \n",
+              "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. \n\n",
               "You do not need a correction dose."
             ],
             "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480.png",
