@@ -10,7 +10,7 @@ logger = logging.getLogger()
 
 
 class DiabetesDialog(DefaultDialog):
-    def new_session_started(self, method_name=None):
+    def new_session_started(self):
         logger.debug("**************** entering DiabetesDialog.new_session_started")
 
         if not self.session.attribute_exists('time_adj'):
@@ -28,19 +28,19 @@ class DiabetesDialog(DefaultDialog):
                 if time_adj is not None:
                     self.session.attributes['time_adj'] = time_adj
 
-    def launch_request(self, method_name=None):
+    def launch_request(self):
         logger.debug("**************** entering DiabetesDialog.launch_request")
-        return self.execute_method('welcome_request')
+        self._method_name = 'welcome_request'
+        return self.handle_default_intent()
 
-    def blood_glucose_correction(self, method_name=None):
-        logger.debug('**************** entering DiabetesDialog.{}'.format(method_name))
-        intent_dict = self.get_intent_details(method_name)
+    def blood_glucose_correction(self):
+        logger.debug('**************** entering DiabetesDialog.blood_glucose_correction')
 
         # 1. Check the state of the conversation and react if things smell funny
-        if not self.is_good_state(method_name):
+        if not self.is_good_state():
             return self.handle_session_end_confused()
 
-        # 2. See if we got any slots filled
+        # 2. See if we have any slots filled
         self.event.slot_data_to_session_attributes()
 
         # 3. See if we have all the data we need
@@ -58,8 +58,8 @@ class DiabetesDialog(DefaultDialog):
             dose_no_dose = 'no_dose'
 
         self.session.save()
-        reply_intent_dict = intent_dict['conditions'][dose_no_dose]
-        return Reply.build(reply_intent_dict, self.session)
+        reply_dialog = self.reply_dialog[self.method_name]
+        return Reply.build(reply_dialog['conditions'][dose_no_dose], self.session)
 
     def calc_blood_glucose_correction(self):
         current_bg_level = self.session.attributes['current_bg_level']
@@ -74,15 +74,14 @@ class DiabetesDialog(DefaultDialog):
         self.session.attributes['correction'] = correction
         return correction
 
-    def insulin_for_carb_consumption(self, method_name=None):
-        logger.debug('**************** entering DiabetesDialog.{}'.format(method_name))
-        intent_dict = self.get_intent_details(method_name)
+    def insulin_for_carb_consumption(self):
+        logger.debug('**************** entering DiabetesDialog.insulin_for_carb_consumption')
 
         # 1. Check the state of the conversation and react if things smell funny
-        if not self.is_good_state(method_name):
+        if not self.is_good_state():
             return self.handle_session_end_confused()
 
-        # 2. See if we got any slots filled
+        # 2. See if we have any slots filled
         self.event.slot_data_to_session_attributes()
 
         # 3. See if we have all the data we need
@@ -98,8 +97,8 @@ class DiabetesDialog(DefaultDialog):
             dose_no_dose = 'no_dose'
 
         self.session.save()
-        reply_intent_dict = intent_dict['conditions'][dose_no_dose]
-        return Reply.build(reply_intent_dict, self.session)
+        reply_dialog = self.reply_dialog[self.method_name]
+        return Reply.build(reply_dialog['conditions'][dose_no_dose], self.session)
 
     def calc_insulin_for_carb_consumption(self):
         amt_of_carbs = self.session.attributes['amt_of_carbs']
@@ -110,15 +109,14 @@ class DiabetesDialog(DefaultDialog):
         self.session.attributes['correction'] = correction
         return correction
 
-    def bg_correction_with_carbs(self, method_name=None):
-        logger.debug('**************** entering DiabetesDialog.{}'.format(method_name))
-        intent_dict = self.get_intent_details(method_name)
+    def bg_correction_with_carbs(self):
+        logger.debug('**************** entering DiabetesDialog.bg_correction_with_carbs')
 
         # 1. Check the state of the conversation and react if things smell funny
-        if not self.is_good_state(method_name):
+        if not self.is_good_state():
             return self.handle_session_end_confused()
 
-        # 2. See if we got any slots filled
+        # 2. See if we have any slots filled
         self.event.slot_data_to_session_attributes()
 
         required_fields = ['time_adj', 'amt_of_carbs', 'current_bg_level',
@@ -143,29 +141,31 @@ class DiabetesDialog(DefaultDialog):
             dose_no_dose = 'no_dose'
 
         self.session.save()
-        reply_intent_dict = intent_dict['conditions'][dose_no_dose]
-        return Reply.build(reply_intent_dict, self.session)
+        reply_dialog = self.reply_dialog[self.method_name]
+        return Reply.build(reply_dialog['conditions'][dose_no_dose], self.session)
 
-    def requested_value_intent(self, method_name=None):
-        logger.debug('**************** entering DiabetesDialog.{}'.format(method_name))
+    def requested_value_intent(self):
+        logger.debug('**************** entering DiabetesDialog.requested_value_intent')
 
         # 1. Check the state of the conversation and react if things smell funny
         established_dialog = self.peek_established_dialog()
-        if established_dialog != method_name:
+        logger.debug('**************** XXXXXXXX established_dialog={} method_name={}'.format(established_dialog, self.method_name))
+        if established_dialog != self.method_name:
             return self.handle_session_end_confused()
         else:
             self.pop_established_dialog()
             established_dialog = self.peek_established_dialog()
+            self._method_name = established_dialog
             return self.execute_method(established_dialog)
 
-    def agree_to_terms(self, method_name=None):
-        logger.debug('**************** entering DiabetesDialog.{}'.format(method_name))
+    def agree_to_terms(self):
+        logger.debug('**************** entering DiabetesDialog.agree_to_terms')
 
-        intent_dict = self.get_intent_details(method_name)
+        reply_dialog = self.reply_dialog[self.method_name]
 
         # 1. Check the state of the conversation and react if things smell funny
         established_dialog = self.peek_established_dialog()
-        if established_dialog != method_name:
+        if established_dialog != self.method_name:
             return self.handle_session_end_confused()
 
         # 2. See if we got any slots filled
@@ -174,8 +174,7 @@ class DiabetesDialog(DefaultDialog):
         # 3. See if we have all the data we need
         # 4. Request data if needed
         if requested_value is None:
-            reply_intent_dict = intent_dict['conditions']['listen']
-            return Reply.build(reply_intent_dict, self.session)
+            return Reply.build(reply_dialog['conditions']['listen'], self.session)
 
         if requested_value == "agree":
             logger.debug('AGREED to AGREEMENT')
@@ -186,19 +185,17 @@ class DiabetesDialog(DefaultDialog):
             established_dialog = self.peek_established_dialog()
             return self.execute_method(established_dialog)
         elif requested_value == "disagree":
-            reply_intent_dict = intent_dict['conditions']['disagree']
+            return Reply.build(reply_dialog['conditions']['disagree'], self.session)
         else:
             # We got a value in the slot but it is neither agree or disagree
-            reply_intent_dict = intent_dict['conditions']['retry']
+            return Reply.build(reply_dialog['conditions']['retry'], self.session)
 
-        return Reply.build(reply_intent_dict, self.session)
-
-    def set_current_time(self, method_name=None):
-        logger.debug('**************** entering DiabetesDialog.{}'.format(method_name))
+    def set_current_time(self):
+        logger.debug('**************** entering DiabetesDialog.set_current_time')
 
         # 1. Check the state of the conversation and react if things smell funny
         established_dialog = self.peek_established_dialog()
-        if established_dialog != method_name:
+        if established_dialog != self.method_name:
             return self.handle_session_end_confused()
 
         requested_value = self.request.value_for_slot_name('time')
@@ -213,28 +210,24 @@ class DiabetesDialog(DefaultDialog):
             established_dialog = self.peek_established_dialog()
             return self.execute_method(established_dialog)
         else:
-            intent_dict = self.get_intent_details(method_name)
-            return Reply.build(intent_dict['conditions']['retry'], self.session)
+            reply_dialog = self.reply_dialog[self.method_name]
+            return Reply.build(reply_dialog['conditions']['retry'], self.session)
 
-    def welcome_request(self, method_name=None):
-        """ Play welcome message and wait for a response
-        """
-        return self.handle_default_intent(method_name)
 
-    def help_request(self, method_name=None):
+    def help_request(self):
         """ Reset any establish conversation and play help message
         """
         self.reset_established_dialog()
-        return self.handle_default_intent(method_name)
+        return self.handle_default_intent()
 
-    def reset_stored_values(self, method_name=None):
+    def reset_stored_values(self):
         self.session.reset_stored_values()
-        return self.handle_default_intent(method_name)
+        return self.handle_default_intent()
 
-    def handle_session_end_request(self, method_name=None):
-        return self.handle_default_intent(method_name)
+    def handle_session_end_request(self):
+        return self.handle_default_intent()
 
-    def handle_session_end_confused(self, method_name=None):
+    def handle_session_end_confused(self):
         logger.debug('**************** entering DiabetesDialog.handle_session_end_confused')
         logger.debug("attributes={}".format(self.session.attributes))
         logger.debug("request={}".format(self.event.request))
@@ -251,18 +244,21 @@ class DiabetesDialog(DefaultDialog):
             return Reply.build(prompt_dict, self.session)
         else:
             # we are done
-            return self.handle_default_intent(method_name='handle_session_end_confused')
+            self._method_name='handle_session_end_confused'
+            return self.handle_default_intent()
 
     # --------------- Helper Methods
 
-    def is_good_state(self, method_name):
+    def is_good_state(self):
+        logger.debug('**************** entering DiabetesDialog.is_good_state')
         state_good = True
         established_dialog = self.peek_established_dialog()
         if established_dialog is not None:
-            if established_dialog != method_name:
+            if established_dialog != self.method_name:
                 state_good = False
         else:
-            self.push_established_dialog(method_name)
+            self.push_established_dialog(self.method_name)
+        logger.debug('**************** EXITING state_good={} established_dialog={} method_name={}'.format(state_good, established_dialog, self.method_name))
         return state_good
 
     def required_fields_process(self, required_fields):
@@ -300,4 +296,4 @@ class DiabetesDialog(DefaultDialog):
         """ Execute a method in this class given its name
         """
         method = getattr(self, method_name)
-        return method(method_name)
+        return method()
