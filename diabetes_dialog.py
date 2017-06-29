@@ -1,6 +1,6 @@
 import logging
 import datetime
-from ask_amy.core.default_dialog import DefaultDialog
+from ask_amy.state_mgr.stack_dialog_mgr import StackDialogManager
 from ask_amy.core.reply import Reply
 from ask_amy.utilities.time_of_day import TimeOfDay
 from ask_amy.utilities.account_link import AmazonProfile
@@ -9,7 +9,7 @@ from zip_code_db import ZipcodeDB
 logger = logging.getLogger()
 
 
-class DiabetesDialog(DefaultDialog):
+class DiabetesDialog(StackDialogManager):
     def new_session_started(self):
         logger.debug("**************** entering DiabetesDialog.new_session_started")
 
@@ -30,7 +30,7 @@ class DiabetesDialog(DefaultDialog):
 
     def launch_request(self):
         logger.debug("**************** entering DiabetesDialog.launch_request")
-        self._method_name = 'welcome_request'
+        self._intent_name = 'welcome_request'
         return self.handle_default_intent()
 
     def blood_glucose_correction(self):
@@ -58,7 +58,7 @@ class DiabetesDialog(DefaultDialog):
             dose_no_dose = 'no_dose'
 
         self.session.save()
-        reply_dialog = self.reply_dialog[self.method_name]
+        reply_dialog = self.reply_dialog[self.intent_name]
         return Reply.build(reply_dialog['conditions'][dose_no_dose], self.session)
 
     def calc_blood_glucose_correction(self):
@@ -97,7 +97,7 @@ class DiabetesDialog(DefaultDialog):
             dose_no_dose = 'no_dose'
 
         self.session.save()
-        reply_dialog = self.reply_dialog[self.method_name]
+        reply_dialog = self.reply_dialog[self.intent_name]
         return Reply.build(reply_dialog['conditions'][dose_no_dose], self.session)
 
     def calc_insulin_for_carb_consumption(self):
@@ -141,7 +141,7 @@ class DiabetesDialog(DefaultDialog):
             dose_no_dose = 'no_dose'
 
         self.session.save()
-        reply_dialog = self.reply_dialog[self.method_name]
+        reply_dialog = self.reply_dialog[self.intent_name]
         return Reply.build(reply_dialog['conditions'][dose_no_dose], self.session)
 
     def requested_value_intent(self):
@@ -149,23 +149,24 @@ class DiabetesDialog(DefaultDialog):
 
         # 1. Check the state of the conversation and react if things smell funny
         established_dialog = self.peek_established_dialog()
-        logger.debug('**************** XXXXXXXX established_dialog={} method_name={}'.format(established_dialog, self.method_name))
-        if established_dialog != self.method_name:
+        logger.debug('**************** XXXXXXXX established_dialog={} intent_name={}'.format(established_dialog,
+                                                                                             self.intent_name))
+        if established_dialog != self.intent_name:
             return self.handle_session_end_confused()
         else:
             self.pop_established_dialog()
             established_dialog = self.peek_established_dialog()
-            self._method_name = established_dialog
+            self._intent_name = established_dialog
             return self.execute_method(established_dialog)
 
     def agree_to_terms(self):
         logger.debug('**************** entering DiabetesDialog.agree_to_terms')
 
-        reply_dialog = self.reply_dialog[self.method_name]
+        reply_dialog = self.reply_dialog[self.intent_name]
 
         # 1. Check the state of the conversation and react if things smell funny
         established_dialog = self.peek_established_dialog()
-        if established_dialog != self.method_name:
+        if established_dialog != self.intent_name:
             return self.handle_session_end_confused()
 
         # 2. See if we got any slots filled
@@ -177,7 +178,6 @@ class DiabetesDialog(DefaultDialog):
             return Reply.build(reply_dialog['conditions']['listen'], self.session)
 
         if requested_value == "agree":
-            logger.debug('AGREED to AGREEMENT')
             date_str = datetime.date.today().strftime("%B %d, %Y")
             self.session.attributes['terms_of_use'] = date_str
             self.session.save()
@@ -195,14 +195,13 @@ class DiabetesDialog(DefaultDialog):
 
         # 1. Check the state of the conversation and react if things smell funny
         established_dialog = self.peek_established_dialog()
-        if established_dialog != self.method_name:
+        if established_dialog != self.intent_name:
             return self.handle_session_end_confused()
 
         requested_value = self.request.value_for_slot_name('time')
         time_am_pm = self.request.value_for_slot_name('ampm')
         time_adj = TimeOfDay.time_adj(requested_value, time_am_pm)
 
-        logger.debug(" time={} time_am_pm={} adj={}".format(requested_value, time_am_pm, time_adj))
         if time_adj is not None:
             self.session.attributes['time_adj'] = str(time_adj)
             self.session.save()
@@ -210,9 +209,8 @@ class DiabetesDialog(DefaultDialog):
             established_dialog = self.peek_established_dialog()
             return self.execute_method(established_dialog)
         else:
-            reply_dialog = self.reply_dialog[self.method_name]
+            reply_dialog = self.reply_dialog[self.intent_name]
             return Reply.build(reply_dialog['conditions']['retry'], self.session)
-
 
     def help_request(self):
         """ Reset any establish conversation and play help message
@@ -226,54 +224,6 @@ class DiabetesDialog(DefaultDialog):
 
     def handle_session_end_request(self):
         return self.handle_default_intent()
-
-    def handle_session_end_confused(self):
-        logger.debug('**************** entering DiabetesDialog.handle_session_end_confused')
-        logger.debug("attributes={}".format(self.session.attributes))
-        logger.debug("request={}".format(self.event.request))
-        # can we re_prompt?
-        if not self.session.attribute_exists('retry_attempted'):
-            prompt_dict = {"speech_out_text": "Could you please repeat or say help.",
-                           "should_end_session": False}
-
-            if self.session.attribute_exists('requested_value_nm'):
-                requested_value_nm = self.session.attributes['requested_value_nm']
-                prompt_dict = self.get_re_prompt_for_slot_data(requested_value_nm)
-
-            self.session.attributes['retry_attempted'] = True
-            return Reply.build(prompt_dict, self.session)
-        else:
-            # we are done
-            self._method_name='handle_session_end_confused'
-            return self.handle_default_intent()
-
-    # --------------- Helper Methods
-
-    def is_good_state(self):
-        logger.debug('**************** entering DiabetesDialog.is_good_state')
-        state_good = True
-        established_dialog = self.peek_established_dialog()
-        if established_dialog is not None:
-            if established_dialog != self.method_name:
-                state_good = False
-        else:
-            self.push_established_dialog(self.method_name)
-        logger.debug('**************** EXITING state_good={} established_dialog={} method_name={}'.format(state_good, established_dialog, self.method_name))
-        return state_good
-
-    def required_fields_process(self, required_fields):
-        reply_dict = None
-        for key in required_fields:
-            if not self.session.attribute_exists(key):
-                logger.debug("      key not found for key={}".format(key))
-                expected_intent = self.get_expected_intent_for_data(key)
-                self.push_established_dialog(expected_intent)
-                self.session.attributes['requested_value_nm'] = key
-
-                reply_slot_dict = self.get_slot_data_details(key)
-                return Reply.build(reply_slot_dict, self.session)
-
-        return reply_dict
 
     def day_night_prefix(self):
         time_adj = self.session.attributes['time_adj']
@@ -292,8 +242,3 @@ class DiabetesDialog(DefaultDialog):
             prefix = 'dinner'
         return prefix
 
-    def execute_method(self, method_name):
-        """ Execute a method in this class given its name
-        """
-        method = getattr(self, method_name)
-        return method()
