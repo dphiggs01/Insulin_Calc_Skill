@@ -5,4 +5,4 @@
 pip install pytz -t ./dist
 pip install pydblite -t ./dist
 cp zipcode.db ./dist
-ask-amy-cli deploy --deploy-json-file cli_config.json
+ask-amy-cli deploy_lambda --deploy-json-file cli_config.json
