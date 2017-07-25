@@ -1,0 +1,30 @@
+{
+  "session": {
+    "sessionId": "SessionId.5bd0834d-0753-4a09-931e-564c92dbdd80",
+    "application": {
+      "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
+    },
+    "attributes": {},
+    "user": {
+      "userId": "amzn1.ask.account.AFIUSCYID5B6TYUCHQXAQDDDX3T2EPZJAMVY7K2HDLL6MAHXOHVGPLMVDBJ6JOESC5H3ZHHA42IMKHUB77URKWWSJWNNRGYH5CYJJHC3Y3UI766EHPCJ72SQLBH2QESCEPWBEMXS47U2V2ENBV6HDJRIRNDNJWEABS766KYS3WQMSLELH6SUVXTNEAYFPK4BV356WRJNOETWTJA",
+      "accessToken": "Atza|IwEBIEZAHeCQIRokkycnulGEbq57UvpxXJpaw_M5JyRiSRm6hY1S8jdj1IejslJWCffu8dH0RwMkoPrmsuivaKenj5Jwr6JCunGV8Cuad5hDfwQ6DLS6xr5mj0_--iel2D1ybcBkS2KhpSno_SGNe1LKLy6DPyZsGl6_dTzmx3gA8-AJKqbrTy83Q5ISkCF6g8c63q7L8mNw3GZ94oNnbaICl8tobupI48dbesoJ4OZHbj0i_uFCrBkWa5wVGH6JLaXh_d6ZHkOTz7cjh2t8FpBkubwrliNSUfnrwygXZmfpXlguzxgVYYAH8p1ZPFvfA--rY5xF3MFiqqcFgvm8p5cbG5dNxxUc_ZdM0tLYcGBcthbNRLBCmEvf_IAmnSoJrBvtlw9YixP8M19akqHb-msTdwNQZctywrGHzxEXWXmT38oKbRG7D2Yfkm4ObhFy8WndrQ6qetnDcf2kkYbqWdrtspXvRESLWNkc-dXFZjw_3SZI-iZKgPFu2eD9M15hTo7YEsU"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.f90d6b27-7bbd-4c02-ae97-6f6a84db2465",
+    "locale": "en-US",
+    "timestamp": "2017-07-25T11:16:21Z",
+    "intent": {
+      "name": "bloodGlucoseCorrection",
+      "slots": {
+        "current_bg_level": {
+          "name": "current_bg_level",
+          "value": "100"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

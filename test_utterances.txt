@@ -6,15 +6,15 @@ Please reset the stored values
 
 What is my blood sugar correction dose?
 
-What is my correction dose if my current level is one hundred?
+What is my correction dose if my current level is two hundred?
 
 How much insulin do I need if I eat forty grams of carbs
 
 How many units of insulin for thirty grams of carbs
 
-what is my insulin dose if my current blood glucose is two hundred  and i am eating forty carbs
+What is my insulin dose if my current blood glucose is two hundred and i am eating forty carbs
 
-calculate dose with current blood glucose two hundred and one hundred grams of carbs
+Calculate dose with current blood glucose two hundred and one hundred grams of carbs
 
 one hundred fifty
 one hundred
@@ -23,7 +23,7 @@ two hundred
 
 === Example profile ===
 Isulin to carb ratio
-Breakfast/am snack 1 unit of insulin for every 6 grams for carbs
+Breakfast/am snack 1 unit of insulin for every 6 grams of carbs
 Lunch/pm snack     1 unit of insulin for every 8 grams of carbs
 Dinner/bedtime     1 unit of insulin for every 10 grams of carbs
 

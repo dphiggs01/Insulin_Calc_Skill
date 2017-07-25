@@ -1,13 +1,13 @@
 {
-  "Skill": {
+  "Skill" : {
     "version": "1.0",
-    "className": "diabetes_dialog.DiabetesDialog",
-    "loggingLevel": "debug"
+    "class_name": "insulin_calc_skill.InsulinCalcSkill",
+    "logging_level": "debug"
   },
   "Session": {
     "persistence": true,
-    "tableName": "InsulinCalc",
-    "fieldsToPersist": [
+    "table_name": "InsulinCalc",
+    "fields_to_persist": [
       "target_bg_level_day",
       "target_bg_level_night",
       "correction_factor_day",
@@ -15,34 +15,24 @@
       "carb_ratio_breakfast",
       "carb_ratio_lunch",
       "carb_ratio_dinner",
-      "terms_of_use",
       "time_adj",
       "time_zone"
     ]
   },
   "Dialog": {
     "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47",
-    "intentControl": {
+    "intent_control": {
+      "bgCorrectionWithCarbs": "bg_correction_with_carbs",
       "bloodGlucoseCorrection": "blood_glucose_correction",
       "insulinForCarbConsumption": "insulin_for_carb_consumption",
       "requestedValue": "requested_value_intent",
       "resetStoredValues": "reset_stored_values",
-      "agreeToTerms": "agree_to_terms",
       "setCurrentTime": "set_current_time",
-      "bgCorrectionWithCarbs": "bg_correction_with_carbs",
-      "AMAZON.HelpIntent": "help_request",
-      "AMAZON.CancelIntent": "handle_session_end_request",
-      "AMAZON.StopIntent": "handle_session_end_request"
+      "AMAZON.HelpIntent": "help_intent",
+      "AMAZON.CancelIntent": "default_cancel_intent",
+      "AMAZON.StopIntent": "default_stop_intent"
     },
     "slots": {
-      "terms_of_use": {
-        "speech_out_ssml": [
-          "In order to use the app, you must agree to the terms of use. ",
-          "You may simply say agree, disagree or I would like to hear the terms"
-        ],
-        "re_prompt_text": "Please respond with agree, disagree or license if you want to here the terms.",
-        "expected_intent": "agree_to_terms"
-      },
       "time_adj": {
         "speech_out_ssml": [
           "What is the current time? Please state <say-as interpret-as='characters'>am",
@@ -86,7 +76,7 @@
         ],
         "expected_intent": "requested_value_intent"
       },
-      "amt_of_carbs": {
+      "carbs_being_eaten": {
         "speech_out_ssml": "How many carbs will you be eating?",
         "re_prompt_text": "Please respond with the number of carbs you will be eating",
         "expected_intent": "requested_value_intent"
@@ -102,7 +92,7 @@
       "re_prompt_text": "How can I help today? ",
       "should_end_session": false
     },
-    "help_request": {
+    "help_intent": {
       "speech_out_ssml": [
         "<p>The insulin dose calculator helps you simplify your diabetes maintenance. </p>",
         "<p>You can ask: What is my blood sugar correction dose? Or ",
@@ -147,30 +137,6 @@
       "speech_out_text": "Sorry I am having trouble processing your request. ",
       "should_end_session": true
     },
-    "agree_to_terms": {
-      "conditions": {
-        "listen": {
-          "speech_out_ssml": [
-            "<p>This application is to be used for information purposes <emphasis level='moderate'>only</emphasis></p> ",
-            "<p>all calculations provided <emphasis level='strong'>must</emphasis> be independently confirmed. </p> ",
-            "<p>This tool does <emphasis level='strong'> not </emphasis> provide medical advice ",
-            "and is <emphasis level='strong'> not </emphasis> to be used for medical purposes. </p>",
-            "<p>Please respond with agree disagree or I would like to hear the terms.</p>"
-          ],
-          "re_prompt_text": "Sorry I did not hear that.",
-          "should_end_session": false
-        },
-        "disagree": {
-          "speech_out_text": "Thanks for responding to the agreement Good Bye",
-          "should_end_session": true
-        },
-        "retry": {
-          "speech_out_text": "Sorry I could not confirm your response please try again with agree or disagree",
-          "re_prompt_text": "Sorry I did not hear that please repeat",
-          "should_end_session": false
-        }
-      }
-    },
     "set_current_time": {
       "should_end_session": false,
       "conditions": {
@@ -186,7 +152,7 @@
         "dose": {
           "speech_out_text": [
             "Your current blood glucose level is {current_bg_level}. ",
-            "You are consuming {amt_of_carbs} carbs. ",
+            "You are consuming {carbs_being_eaten} carbs. ",
             "Your {day_night}time target blood glucose level is {target_bg_level}. ",
             "Your {day_night}time correction factor is {correction_factor}. ",
             "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. ",
@@ -196,7 +162,7 @@
             "title": "Blood Glucose Correction with carbs",
             "content": [
               "Your current blood glucose level is {current_bg_level}. \n",
-              "You are consuming {amt_of_carbs} carbs. \n",
+              "You are consuming {carbs_being_eaten} carbs. \n",
               "Your {day_night}time target blood glucose level is {target_bg_level}. \n",
               "Your {day_night}time correction factor is {correction_factor}. \n",
               "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. \n\n",
@@ -210,7 +176,7 @@
         "no_dose": {
           "speech_out_text": [
             "Your current blood glucose level is {current_bg_level}. ",
-            "You are consuming {amt_of_carbs} carbs. ",
+            "You are consuming {carbs_being_eaten} carbs. ",
             "Your {day_night}time target  blood glucose level is {target_bg_level}. ",
             "Your {day_night}time correction factor is {correction_factor}. ",
             "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. ",
@@ -220,7 +186,7 @@
             "title": "Blood Glucose Correction with carbs",
             "content": [
               "Your current blood glucose level is {current_bg_level}. \n",
-              "You are consuming {amt_of_carbs} carbs. \n",
+              "You are consuming {carbs_being_eaten} carbs. \n",
               "Your {day_night}time target  blood glucose level is {target_bg_level}. \n",
               "Your {day_night}time correction factor is {correction_factor}. \n",
               "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. \n\n",
@@ -291,14 +257,14 @@
       "conditions": {
         "dose": {
           "speech_out_text": [
-            "You are consuming {amt_of_carbs} carbs. ",
+            "You are consuming {carbs_being_eaten} carbs. ",
             "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. ",
             "You need {correction} units of insulin.  "
           ],
           "card": {
             "title": "Insulin for Carb Consumption",
             "content": [
-              "You are consuming {amt_of_carbs} carbs. \n",
+              "You are consuming {carbs_being_eaten} carbs. \n",
               "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. \n\n",
               "You need {correction} units of insulin.  "
             ],
@@ -309,14 +275,14 @@
         },
         "no_dose": {
           "speech_out_text": [
-            "You are consuming {amt_of_carbs} carbs. ",
+            "You are consuming {carbs_being_eaten} carbs. ",
             "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. ",
             "You do not need a correction dose."
           ],
           "card": {
             "title": "Insulin for Carb Consumption",
             "content": [
-              "You are consuming {amt_of_carbs} carbs. \n",
+              "You are consuming {carbs_being_eaten} carbs. \n",
               "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. \n\n",
               "You do not need a correction dose."
             ],
@@ -334,4 +300,3 @@
     }
   }
 }
-

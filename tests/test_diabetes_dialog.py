@@ -1,4 +1,5 @@
 import logging
+import json
 from tests.test_alexa_skill_base import TestAlexaSkillBase
 from ask_amy.core.skill_factory import SkillFactory
 
@@ -7,9 +8,17 @@ logger = logging.getLogger()
 class DiabetesTest(TestAlexaSkillBase):
     def setUp(self):
         BASE_DIR=".."
-        CONFIG=BASE_DIR+"/skill_configuration.json"
+        CONFIG=BASE_DIR+"/skill_config.json"
         self.dialog = SkillFactory.build(CONFIG)
         #self.dynamo_db = DynamoDB("Bolus", "http://localhost:8000")
+
+    def test_error(self):
+        file_name = 'ERROR_TEST.json'
+        file_ptr_r = open("./data/{}".format(file_name), 'r')
+        request_dict = json.load(file_ptr_r)
+        dialog_response = self.dialog.begin(request_dict)
+        print(json.dumps(dialog_response, indent=4))
+
 
     def test_reset_stored_values(self):
         self.logger.debug("DiabetesTest.test_reset_stored_values")

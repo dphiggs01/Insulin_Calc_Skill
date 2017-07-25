@@ -1,15 +1,6 @@
 {
   "intents": [
     {
-      "slots": [
-        {
-          "name": "agree",
-          "type": "agree"
-        }
-      ],
-      "intent": "agreeToTerms"
-    },
-    {
       "intent": "AMAZON.CancelIntent"
     },
     {
@@ -34,7 +25,7 @@
     {
       "slots": [
         {
-          "name": "requested_value",
+          "name": "current_bg_level",
           "type": "AMAZON.NUMBER"
         }
       ],
@@ -43,7 +34,7 @@
     {
       "slots": [
         {
-          "name": "requested_value",
+          "name": "carbs_being_eaten",
           "type": "AMAZON.NUMBER"
         }
       ],
