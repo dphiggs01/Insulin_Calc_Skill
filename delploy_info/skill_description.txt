@@ -1,0 +1,62 @@
+SHORT: The Insulin Calculator provides a straightforward and quick way calculate insulin doses for people with diabetes.
+
+
+The Insulin Calculator provides a straightforward and quick way calculate insulin doses for people with diabetes.
+It is intended for educational purposes to help with standard insulin dose calculations.
+
+
+NOTE: The results provided by the Insulin Calculator are for educational purposes ONLY, all results should be
+externally calculated and confirmed before any insulin is consumed.
+
+NOTE: The Insulin Calculator requests "Account Linking" to determine your time-zone, no personal account
+information is required or collected.
+
+To get started... you can ask Alexa:
+
+"Alexa, ask Insulin Calculator What's my blood glucose correction dose?"
+"Alexa, ask Insulin Calculator What's my blood glucose correction dose if my current level is two hundred?"
+"Alexa, ask Insulin Calculator How many units of insulin do I need if I eat sixty grams of carbs?"
+"Alexa, ask Insulin Calculator to calculate dose with current blood glucose two hundred and eating sixty grams of carbs."
+
+You can also reset stored data using the following command:
+
+"Alexa, tell Insulin Calculator to reset my stored values."
+
+
+TEST Notes:
+Hi Test team.
+This skill essentially provides three simple calculations.
+1. ICD = (CBGL - TBGL) / CF
+2. CID = CTBE / CR
+3. TDFM = ICD + CID
+
+CBGL = Current Blood Glucose Level
+TBGL = Target Blood Glucose Level
+CF   = Correction Factor
+ICD  = Insulin correction dose
+
+CTBE = Carbs to be eaten
+CR   = Carb Ratio
+CID  = Carb insulin dose
+
+TDFM = Total dose for mealtime
+
+However the variables for these calculations can change for each
+mealtime (breakfast, lunch & dinner). The skill asks for variables
+if it has not collected them already but will reuse them if it has collected
+them from a previous calculation request during that specific mealtime.
+
+The DymamoDB will collect the below data points:
+      "target_bg_level_day",
+      "target_bg_level_night",
+      "correction_factor_day",
+      "correction_factor_night",
+      "carb_ratio_breakfast",
+      "carb_ratio_lunch",
+      "carb_ratio_dinner",
+      "time_adj",
+      "time_zone"
+
+
+
+
