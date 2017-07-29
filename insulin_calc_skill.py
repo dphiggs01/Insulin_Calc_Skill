@@ -13,9 +13,8 @@ class InsulinCalcSkill(StackDialogManager):
     def new_session_started(self):
         logger.debug("**************** entering DiabetesDialog.new_session_started")
 
-        if not self.session.attribute_exists('time_adj'):
-            # If we do not have a time adj offset see if we can derive one from timezone
-            if not self.session.attribute_exists('time_zone') and self.session.access_token is not None:
+        if not self.session.attribute_exists('time_zone'):
+            if self.session.access_token is not None:
                 # If we do not have a timezone see if we have access to the amazon profile to get one
                 amazon_profile = AmazonProfile(self.session.access_token)
                 zip_code = amazon_profile.get_zip_code()
@@ -23,10 +22,10 @@ class InsulinCalcSkill(StackDialogManager):
                 timezone = zip_code_db.get_timezone_for_zip_code(zip_code)
                 self.session.attributes['time_zone'] = timezone
 
-            if self.session.attribute_exists('time_zone'):
-                time_adj = TimeOfDay.time_adj_given_tz(self.session.attributes['time_zone'])
-                if time_adj is not None:
-                    self.session.attributes['time_adj'] = time_adj
+        if self.session.attribute_exists('time_zone'):
+            time_adj = TimeOfDay.time_adj_given_tz(self.session.attributes['time_zone'])
+            if time_adj is not None:
+                self.session.attributes['time_adj'] = time_adj
 
     def launch_request(self):
         logger.debug("**************** entering DiabetesDialog.launch_request")
@@ -142,6 +141,10 @@ class InsulinCalcSkill(StackDialogManager):
     def help_intent(self):
         logger.debug("**************** entering {}.{}".format(self.__class__.__name__, self.intent_name))
         self.reset_established_dialog()
+        return self.handle_default_intent()
+
+    def account_link_intent(self):
+        logger.debug("**************** entering {}.{}".format(self.__class__.__name__, self.intent_name))
         return self.handle_default_intent()
 
     def reset_stored_values(self):

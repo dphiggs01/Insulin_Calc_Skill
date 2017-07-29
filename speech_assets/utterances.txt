@@ -35,3 +35,9 @@ setCurrentTime its {time} {ampm}
 setCurrentTime {time} o clock {ampm}
 setCurrentTime the time is {time} {ampm}
 setCurrentTime the current time is {time} {ampm}
+
+accountLinkIntent Account Link
+accountLinkIntent Link with my Amazon Account
+accountLinkIntent Link Account
+accountLinkIntent set time zone
+accountLinkIntent set timezone

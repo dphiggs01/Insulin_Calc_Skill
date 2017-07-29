@@ -15,7 +15,6 @@
       "carb_ratio_breakfast",
       "carb_ratio_lunch",
       "carb_ratio_dinner",
-      "time_adj",
       "time_zone"
     ]
   },
@@ -27,6 +26,7 @@
       "insulinForCarbConsumption": "insulin_for_carb_consumption",
       "requestedValue": "requested_value_intent",
       "resetStoredValues": "reset_stored_values",
+      "accountLinkIntent": "account_link_intent",
       "setCurrentTime": "set_current_time",
       "AMAZON.HelpIntent": "help_intent",
       "AMAZON.CancelIntent": "default_cancel_intent",
@@ -92,6 +92,13 @@
       "re_prompt_text": "How can I help today? ",
       "should_end_session": false
     },
+    "account_link_intent": {
+      "speech_out_text": "Please use the companion app to authenticate on Amazon",
+      "should_end_session": true,
+      "card":{
+        "type": "LinkAccount"
+      }
+    },
     "help_intent": {
       "speech_out_ssml": [
         "<p>The insulin dose calculator helps you simplify your diabetes maintenance. </p>",
@@ -103,7 +110,7 @@
         "<break strength='strong'/> ",
         "<p>To help simplify future calculations, The Insulin Calculator will remember a few constant values ",
         "like your carb ratios and your correction factors</p>",
-        "<p>To reset these values you can say: Please reset the stored values</p>",
+        "<p>To reset these values you can say: Please reset the stored values</p> ",
         "<p>What would you like to do?</p>"
       ],
       "re_prompt_text": "How can I help today? ",
