@@ -2,77 +2,84 @@ import logging
 import json
 from tests.test_alexa_skill_base import TestAlexaSkillBase
 from ask_amy.core.skill_factory import SkillFactory
+import warnings
 
 logger = logging.getLogger()
 
 class DiabetesTest(TestAlexaSkillBase):
+
+
     def setUp(self):
         BASE_DIR=".."
         CONFIG=BASE_DIR+"/skill_config.json"
         self.dialog = SkillFactory.build(CONFIG)
+        #boto3 does not close resources waits for gc cleanup
+        warnings.filterwarnings("ignore", category=ResourceWarning)
         #self.dynamo_db = DynamoDB("Bolus", "http://localhost:8000")
-
-    def test_error(self):
-        file_name = 'ERROR_TEST.json'
-        file_ptr_r = open("./data/{}".format(file_name), 'r')
-        request_dict = json.load(file_ptr_r)
-        dialog_response = self.dialog.begin(request_dict)
-        print(json.dumps(dialog_response, indent=4))
-
 
     def test_reset_stored_values(self):
         self.logger.debug("DiabetesTest.test_reset_stored_values")
         # To Alexa: ask insulin calculator please reset the stored values
-        self.request_response('test_reset_stored_values.json')
+        request_dict, response_dict = self.get_request_response('test_reset_stored_values.json')
+        dialog_response = self.dialog.begin(request_dict)
+        self.assertEqual("OK I have reset the stored values in the insulin calculator.",
+                          dialog_response['response']['outputSpeech']['text'])
 
     def test_open_insulin_calculator(self):
         self.logger.debug("DiabetesTest.test_open_insulin_calculator")
         # To Alexa: open insulin calculator
-        self.request_response('test_open.json')
+        request_dict, response_dict = self.get_request_response('test_open.json')
+        dialog_response = self.dialog.begin(request_dict)
+        speech = dialog_response['response']['outputSpeech']['ssml'][:49]
+        self.assertEqual("<speak><p>Welcome to the insulin dose calculator.",
+                               speech)
 
     def test_help_insulin_calculator(self):
         self.logger.debug("DiabetesTest.test_help_insulin_calculator")
-        # To Alexa: help insulin calculator
-        self.request_response('test_help.json')
+        # To Alexa: ask insulin calculator for help
+        request_dict, response_dict = self.get_request_response('test_help.json')
+        dialog_response = self.dialog.begin(request_dict)
+        speech = dialog_response['response']['outputSpeech']['ssml'][:48]
+        self.assertEqual("<speak><p>The Insulin Calculator is intended for",
+                         speech)
 
-    def test_glood_glucose_correction(self):
-        self.logger.debug("DiabetesTest.test_glood_glucose_correction")
-        # To Alexa: What is my blood sugar correction dose?
-        self.request_response('test_blood_glucose_correction.json')
+    def test_time_zone_request(self):
+        self.logger.debug("DiabetesTest.test_time_zone_request")
+        # To Alexa: ask insulin calculator What is my blood sugar correction dose?
+        # Note: no time zone is set
 
-    def test_glood_glucose_correction_level(self):
-        self.logger.debug("DiabetesTest.test_glood_glucose_correction_level")
-        # From System: What is your current blood glucose level?
-        # To Alexa: two hundred
-        # FAILING BECAUSE THE TIME IS NOT MOCKED
-        # self.request_response('test_blood_glucose_correction_level.json')
+        # Reset the DB
+        request_dict, response_dict = self.get_request_response('test_reset_stored_values.json')
+        self.dialog.begin(request_dict)
 
-    def test_agreement_prompt(self):
-        self.logger.debug("DiabetesTest.test_agreement_prompt")
-        # To Alexa: What is my blood sugar correction dose?
-        # Precondition No agreement set in session
-        self.request_response('test_agreement_prompt.json')
+        #Expect a Time Zone Request
+        request_dict, response_dict = self.get_request_response('test_time_zone_request.json')
+        dialog_response = self.dialog.begin(request_dict)
 
+        speech = dialog_response['response']['outputSpeech']['ssml'][:40]
+        self.assertEqual("<speak><p>What time zone are you in?</p>",
+                         speech)
 
-    def test_agreement_terms(self):
-        self.logger.debug("DiabetesTest.test_agreement_terms")
-        # To Alexa: I would like to hear the terms
-        # Precondition No agreement set in session
-        self.request_response('test_agreement_terms.json')
+    def test_blood_glucose_correction(self):
+        self.logger.debug("DiabetesTest.test_blood_glucose_correction")
+        # Alexa, ask Insulin Calculator What's my blood glucose correction dose?
+        # Note: Required field already provided
 
-    def test_set_time_prompt(self):
-        self.logger.debug("DiabetesTest.test_set_time_prompt")
-        # To Alexa: I would like to hear the terms
-        # From system: What is the current time.
-        # Precondition No time set in session
-        self.request_response('test_set_time_prompt.json')
+        request_dict, response_dict = self.get_request_response('test_blood_glucose_correction.json')
+        dialog_response = self.dialog.begin(request_dict)
+        # logger.warning("REQUEST {}".format(json.dumps(dialog_response, sort_keys=True, indent=4)))
+        speech = dialog_response['response']['outputSpeech']['text'][-43:]
+        self.assertEqual("Your correction dose is 2 units of insulin.",
+                         speech)
 
-    def test_set_time_set_value(self):
-        self.logger.debug("DiabetesTest.test_set_time_value")
-        # To Alexa: I would like to hear the terms
-        # From system: What is the current time.
-        # Precondition No time set in session
-        # FAILING BECAUSE THE TIME IS NOT MOCKED
-        # self.request_response('test_set_time_value.json')
+    def test_insulin_for_carbs(self):
+        self.logger.debug("DiabetesTest.test_insulin_for_carbs")
+        # Alexa, ask Insulin Calculator How many units of insulin do I need if I eat sixty grams of carbs?
+        # Note: Required field already provided
 
-
+        request_dict, response_dict = self.get_request_response('test_insulin_for_carbs.json')
+        dialog_response = self.dialog.begin(request_dict)
+        # logger.warning("REQUEST {}".format(json.dumps(dialog_response, sort_keys=True, indent=4)))
+        speech = dialog_response['response']['outputSpeech']['text'][-31:]
+        self.assertEqual("You need 10 units of insulin.  ",
+                         speech)

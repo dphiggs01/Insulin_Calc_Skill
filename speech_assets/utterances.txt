@@ -6,23 +6,25 @@ bgCorrectionWithCarbs calculate dose for blood glucose {current_bg_level} and {c
 
 bloodGlucoseCorrection Find my blood glucose correction dose
 bloodGlucoseCorrection What is my blood sugar correction
+bloodGlucoseCorrection Whats my blood sugar correction dose
 bloodGlucoseCorrection What is my correction dose if my current level is {current_bg_level}
+bloodGlucoseCorrection Whats my correction dose if my current level is {current_bg_level}
 bloodGlucoseCorrection Find my correction dose if my current blood glucose level is {current_bg_level}
 bloodGlucoseCorrection Tell me my blood glucose correction if my current level is {current_bg_level}
 
+insulinForCarbConsumption How much insulin do I need if I am eating carbs
 insulinForCarbConsumption How much insulin do I need if I eat {carbs_being_eaten} carbs
 insulinForCarbConsumption How much insulin for {carbs_being_eaten} grams of carbs
 insulinForCarbConsumption How much insulin for {carbs_being_eaten} carbs
 insulinForCarbConsumption How many units of insulin for {carbs_being_eaten} grams of carbs
 insulinForCarbConsumption How much insulin do i need if i eat {carbs_being_eaten} grams of carbs
 insulinForCarbConsumption How many units of insulin do i need if i eat {carbs_being_eaten} grams of carbs
-insulinForCarbConsumption How much insulin do I need if I am eating carbs
 
 requestedValue {requested_value}
 requestedValue The value is {requested_value}
 requestedValue The level is {requested_value}
-requestedValue {requested_value}  carbs
-requestedValue eating {requested_value}  carbs
+requestedValue {requested_value} carbs
+requestedValue eating {requested_value} carbs
 
 resetStoredValues Reset the stored values
 resetStoredValues Please reset the stored values
@@ -30,14 +32,8 @@ resetStoredValues Clear the stored values
 resetStoredValues Clear the stored data
 resetStoredValues Remove stored values
 
-setCurrentTime {time} {ampm}
-setCurrentTime its {time} {ampm}
-setCurrentTime {time} o clock {ampm}
-setCurrentTime the time is {time} {ampm}
-setCurrentTime the current time is {time} {ampm}
-
-accountLinkIntent Account Link
-accountLinkIntent Link with my Amazon Account
-accountLinkIntent Link Account
-accountLinkIntent set time zone
-accountLinkIntent set timezone
+setCurrentTimeZone {time_zone}
+setCurrentTimeZone the time zone is {time_zone}
+setCurrentTimeZone my time zone is {time_zone}
+setCurrentTimeZone im in the {time_zone} time zone
+setCurrentTimeZone {time_zone} time zone

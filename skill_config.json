@@ -1,5 +1,5 @@
 {
-  "Skill" : {
+  "Skill": {
     "version": "1.0",
     "class_name": "insulin_calc_skill.InsulinCalcSkill",
     "logging_level": "debug"
@@ -15,7 +15,8 @@
       "carb_ratio_breakfast",
       "carb_ratio_lunch",
       "carb_ratio_dinner",
-      "time_zone"
+      "time_zone",
+      "time_adj"
     ]
   },
   "Dialog": {
@@ -26,90 +27,163 @@
       "insulinForCarbConsumption": "insulin_for_carb_consumption",
       "requestedValue": "requested_value_intent",
       "resetStoredValues": "reset_stored_values",
-      "accountLinkIntent": "account_link_intent",
-      "setCurrentTime": "set_current_time",
+      "setCurrentTimeZone": "set_current_time_zone",
+      "AMAZON.YesIntent": "yes_intent",
+      "AMAZON.NoIntent": "no_intent",
       "AMAZON.HelpIntent": "help_intent",
       "AMAZON.CancelIntent": "default_cancel_intent",
       "AMAZON.StopIntent": "default_stop_intent"
     },
     "slots": {
-      "time_adj": {
+      "time_zone": {
         "speech_out_ssml": [
-          "What is the current time? Please state <say-as interpret-as='characters'>am",
-          "</say-as> or <say-as interpret-as='characters'>pm</say-as> in your response"
+          "<p>What time zone are you in?</p> You can say: my time zone is Eastern ",
+          "or you can use any of the following <say-as interpret-as='characters'>us</say-as> ",
+          "time zones Pacific, Mountain, Central, Eastern, Alaska, Hawaii, or Arizona "
         ],
-        "expected_intent": "set_current_time"
+        "re_prompt_ssml": "Please respond with a <say-as interpret-as='characters'>us</say-as> time zone.",
+        "expected_intent": "set_current_time_zone"
       },
       "target_bg_level_day": {
         "speech_out_ssml": "What is your daytime target blood glucose level?",
-        "expected_intent": "requested_value_intent"
+        "re_prompt_ssml": "Sorry I did not hear that, what is your daytime target blood glucose level?",
+        "expected_intent": "requested_value_intent",
+        "validation": {
+          "type_validator": "insulin_calc_validator.ValidRangeBGTarget",
+          "msg_01_text": "Please try again. The calculator accepts values from fifty to two hundred fifty.",
+          "msg_03_text": "Please try again with a valid number"
+        }
       },
       "target_bg_level_night": {
         "speech_out_ssml": "What is your nighttime target blood glucose level?",
-        "expected_intent": "requested_value_intent"
+        "re_prompt_ssml": "Sorry I did not hear that, what is your nighttime target blood glucose level?",
+        "expected_intent": "requested_value_intent",
+        "validation": {
+          "type_validator": "insulin_calc_validator.ValidRangeBGTarget",
+          "msg_01_text": "Please try again. The calculator accepts values from fifty to two hundred fifty.",
+          "msg_03_text": "Please try again with a valid number"
+        }
       },
       "correction_factor_day": {
         "speech_out_ssml": "What is your daytime blood glucose correction factor?",
-        "expected_intent": "requested_value_intent"
+        "re_prompt_ssml": "Sorry I did not hear that, what is your daytime blood glucose correction factor?",
+        "expected_intent": "requested_value_intent",
+        "validation": {
+          "type_validator": "insulin_calc_validator.ValidRangeBGFactor",
+          "msg_01_text": "Please try again, providing a valid value between fifteen and ninety ",
+          "msg_03_text": "Please try again with a valid number"
+        }
       },
       "correction_factor_night": {
         "speech_out_ssml": "What is your nighttime blood glucose correction factor?",
-        "expected_intent": "requested_value_intent"
+        "re_prompt_ssml": "Sorry I did not hear that, What is your nighttime blood glucose correction factor?",
+        "expected_intent": "requested_value_intent",
+        "validation": {
+          "type_validator": "insulin_calc_validator.ValidRangeBGFactor",
+          "msg_01_text": "Please try again, providing a valid value between fifteen and ninety ",
+          "msg_03_text": "Please try again with a valid number"
+        }
       },
       "carb_ratio_breakfast": {
-        "speech_out_ssml": "What is the number of carbs in your breakfast or am snack carb ratio?",
+        "speech_out_ssml": [
+          "What is the number of carbs in your breakfast or ",
+          "<say-as interpret-as='characters'>am</say-as> snack carb ratio?"
+        ],
+        "re_prompt_ssml": [
+          "What is the number of carbs in your breakfast or ",
+          "<say-as interpret-as='characters'>am</say-as> snack carb ratio?"
+        ],
+        "validation": {
+          "type_validator": "insulin_calc_validator.ValidRangeBGRatio",
+          "msg_01_text": "Please try again, providing a valid value between five and twenty five ",
+          "msg_03_text": "Please try again with a valid number"
+        },
         "expected_intent": "requested_value_intent"
       },
       "carb_ratio_lunch": {
-        "speech_out_ssml": "What is the number of carbs in your lunch or pm snack carb ratio?",
+        "speech_out_ssml": [
+          "What is the number of carbs in your lunch or ",
+          "<say-as interpret-as='characters'>pm</say-as> snack carb ratio?"
+        ],
+        "re_prompt_ssml": [
+          "Sorry I did not hear that, What is the number of carbs in your lunch or ",
+          "<say-as interpret-as='characters'>pm</say-as> snack carb ratio?"
+        ],
+        "validation": {
+          "type_validator": "insulin_calc_validator.ValidRangeBGRatio",
+          "msg_01_text": "Please try again, providing a valid value between five and twenty five ",
+          "msg_03_text": "Please try again with a valid number"
+        },
         "expected_intent": "requested_value_intent"
       },
       "carb_ratio_dinner": {
         "speech_out_ssml": "What is the number of carbs in your dinner or bedtime snack carb ratio?",
-        "expected_intent": "requested_value_intent"
+        "re_prompt_ssml": "Sorry I did not hear that, What is the number of carbs in your dinner or bedtime snack carb ratio?",
+        "expected_intent": "requested_value_intent",
+        "validation": {
+          "type_validator": "insulin_calc_validator.ValidRangeBGRatio",
+          "msg_01_text": "Please try again, providing a valid value between five and twenty five ",
+          "msg_03_text": "Please try again with a valid number"
+        }
       },
       "current_bg_level": {
         "speech_out_ssml": "What is your current blood glucose level?",
-        "re_prompt_text": [
-          "Sorry I did not hear that. What is your blood glucose level. ",
-          "This is a number usually greater than eighty and less than three hundred"
-        ],
+        "re_prompt_text": "Sorry I did not hear that. What is your blood glucose level. ",
+        "validation": {
+          "type_validator": "insulin_calc_validator.ValidRangeBG",
+          "msg_01_text": "Please try again. The the blood glucose value you provided is out of range for the calculator.",
+          "msg_02_text": "Please try again. Zero is not a valid blood glucose value.",
+          "msg_03_text": "Please try again with a valid blood glucose value."
+        },
         "expected_intent": "requested_value_intent"
       },
       "carbs_being_eaten": {
         "speech_out_ssml": "How many carbs will you be eating?",
         "re_prompt_text": "Please respond with the number of carbs you will be eating",
-        "expected_intent": "requested_value_intent"
+        "expected_intent": "requested_value_intent",
+        "validation": {
+          "type_validator": "insulin_calc_validator.ValidRangeCalories",
+          "msg_01_text": "Please try again. The calculator accepts values from one to three thousand.",
+          "msg_03_text": "Please try again with a valid number"
+        }
       }
     },
     "welcome_request": {
-      "speech_out_text": [
-        "Welcome to the insulin dose calculator. ",
-        "Here you can get information simplifying your diabetes maintenance. ",
-        "You can ask: What is my blood sugar correction dose? or ",
-        "How many units of insulin for thirty grams of carbs?"
+      "speech_out_ssml": [
+        "<p>Welcome to the insulin dose calculator. ",
+        "The Insulin Calculator provides a straightforward and easy way to calculate insulin ",
+        "doses for people with diabetes</p> ",
+        "<p>You can ask: What is my blood sugar correction dose? Or ",
+        "How much insulin do I need if I am eating carbs?</p> "
       ],
       "re_prompt_text": "How can I help today? ",
+      "card": {
+        "title": "Welcome to the Insulin Calculator.",
+        "content": [
+          "The Insulin Calculator provides a straightforward and easy way to calculate insulin  ",
+          "doses for people with diabetes. \n\n",
+          "You can ask: What is my blood sugar correction dose? Or ",
+          "How much insulin do I need if I am eating carbs?  \n\n"
+        ],
+        "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480b.png",
+        "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800b.png"
+      },
       "should_end_session": false
-    },
-    "account_link_intent": {
-      "speech_out_text": "Please use the companion app to authenticate on Amazon",
-      "should_end_session": true,
-      "card":{
-        "type": "LinkAccount"
-      }
     },
     "help_intent": {
       "speech_out_ssml": [
-        "<p>The insulin dose calculator helps you simplify your diabetes maintenance. </p>",
-        "<p>You can ask: What is my blood sugar correction dose? Or ",
-        "how many units of insulin for thirty grams of carbs? </p>",
-        "<p>You can also combine your requests. </p>",
-        "<p> You can do this by asking: Calculate dose with current blood glucose ",
-        "two hundred <break strength='strong'/> and forty grams of carbs. </p>",
-        "<break strength='strong'/> ",
+        "<p>The Insulin Calculator is intended for educational purposes to help with standard ",
+        "insulin dose calculations. It provides a straightforward and easy way to calculate insulin ",
+        "doses for people with diabetes. </p>",
+        "<p>You can ask: What's my blood glucose correction dose? Or ",
+        "What's my blood glucose correction dose if my current level is two hundred? </p>",
+        "<p>You can also get a dosage for the number of carbs you are eating. </p>",
+        "<p>You can do this by asking: How much insulin do I need if I am eating carbs? Or ",
+        "How many units of insulin do I need if I eat sixty grams of carbs? </p>",
+        "<p>You can also combine these requests by asking:</p><p>Calculate dose with current blood glucose two hundred ",
+        "and eating sixty grams of carbs.</p>",
         "<p>To help simplify future calculations, The Insulin Calculator will remember a few constant values ",
-        "like your carb ratios and your correction factors</p>",
+        "like your carb ratios and your correction factors </p>",
         "<p>To reset these values you can say: Please reset the stored values</p> ",
         "<p>What would you like to do?</p>"
       ],
@@ -117,24 +191,41 @@
       "card": {
         "title": "Insulin Calculator Help",
         "content": [
-          "The insulin calculator helps you simplify your diabetes maintenance. \n\n",
-          "You can ask: What is my blood sugar correction dose or ",
-          "how many units of insulin for thirty grams of carbs? \n\n",
-          "You can also combine your requests. ",
-          "You can do this by asking: Calculate dose with current blood glucose ",
-          "two hundred and forty grams of carbs. \n\n",
+          "The Insulin Calculator is intended for educational purposes to help with standard ",
+          "insulin dose calculations. It provides a straightforward and easy way calculate insulin  ",
+          "doses for people with diabetes. \n\n",
+          "You can ask: What's my blood glucose correction dose? Or ",
+          "What's my blood glucose correction dose if my current level is two hundred? \n\n",
+          "You can also get a dosage for the number of carbs you are eating. ",
+          "You can do this by asking: How much insulin do I need if I am eating carbs? Or ",
+          "How many units of insulin do I need if I eat sixty grams of carbs? \n\n",
+          "You can also combine these requests by asking: Calculate dose with current blood glucose two hundred ",
+          "and eating sixty grams of carbs. \n\n",
           "To help simplify future calculations, the Insulin Calculator will remember a few constant values ",
           "like your carb ratios and your correction factors. \n\n",
           "To reset these values, you can say: Please reset the stored values."
         ],
-        "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480.png",
-        "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800.png"
+        "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480b.png",
+        "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800b.png"
       },
       "should_end_session": false
     },
     "reset_stored_values": {
-      "speech_out_text": "OK I have reset the stored values in the insulin calculator.",
-      "should_end_session": true
+      "conditions": {
+        "confirmation": {
+          "speech_out_text": "You want to reset the stored values correct?",
+          "re_prompt_text": "Sorry I did not hear that please repeat.",
+          "should_end_session": false
+        },
+        "yes": {
+          "speech_out_text": "OK I have reset the stored values in the insulin calculator.",
+          "should_end_session": true
+        },
+        "no": {
+          "speech_out_text": "OK the stored values will not be reset. Good Bye",
+          "should_end_session": true
+        }
+      }
     },
     "handle_session_end_request": {
       "speech_out_text": "Thank you for using insulin calculator. ",
@@ -144,12 +235,12 @@
       "speech_out_text": "Sorry I am having trouble processing your request. ",
       "should_end_session": true
     },
-    "set_current_time": {
+    "set_current_time_zone": {
       "should_end_session": false,
       "conditions": {
         "retry": {
-          "speech_out_text": "Sorry I could not confirm your time response please try again",
-          "re_prompt_text": "Sorry I did not hear that please repeat",
+          "speech_out_text": "Sorry I could not confirm your time zone please try again.",
+          "re_prompt_text": "Sorry I did not hear that please repeat.",
           "should_end_session": false
         }
       }
@@ -175,8 +266,8 @@
               "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. \n\n",
               "Your correction dose is {correction} units of insulin."
             ],
-            "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480.png",
-            "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800.png"
+            "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480b.png",
+            "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800b.png"
           },
           "should_end_session": true
         },
@@ -199,15 +290,10 @@
               "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. \n\n",
               "You do not need a correction dose at this time."
             ],
-            "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480.png",
-            "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800.png"
+            "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480b.png",
+            "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800b.png"
           },
           "should_end_session": true
-        },
-        "retry": {
-          "speech_out_text": "Sorry I could not confirm your response please try again with agree or disagree",
-          "re_prompt_text": "Sorry I did not hear that please repeat",
-          "should_end_session": false
         }
       }
     },
@@ -228,8 +314,8 @@
               "Your {day_night}time correction factor is {correction_factor}. \n\n",
               "Your correction dose is {correction} units of insulin."
             ],
-            "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480.png",
-            "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800.png"
+            "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480b.png",
+            "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800b.png"
           },
           "should_end_session": true
         },
@@ -248,15 +334,10 @@
               "Your {day_night}time correction factor is {correction_factor}. \n\n",
               "You do not need a correction dose at this time."
             ],
-            "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480.png",
-            "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800.png"
+            "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480b.png",
+            "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800b.png"
           },
           "should_end_session": true
-        },
-        "retry": {
-          "speech_out_text": "Sorry I could not confirm your response please try again with agree or disagree",
-          "re_prompt_text": "Sorry I did not hear that please repeat",
-          "should_end_session": false
         }
       }
     },
@@ -275,8 +356,8 @@
               "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. \n\n",
               "You need {correction} units of insulin.  "
             ],
-            "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480.png",
-            "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800.png"
+            "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480b.png",
+            "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800b.png"
           },
           "should_end_session": true
         },
@@ -293,15 +374,10 @@
               "Using your {mealtime} insulin to carb ratio of 1 unit for {carb_ratio} grams of carbs. \n\n",
               "You do not need a correction dose."
             ],
-            "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480.png",
-            "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800.png"
+            "small_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480b.png",
+            "large_image": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800b.png"
           },
           "should_end_session": true
-        },
-        "retry": {
-          "speech_out_text": "Sorry I could not confirm your response please try again with agree or disagree",
-          "re_prompt_text": "Sorry I did not hear that please repeat",
-          "should_end_session": false
         }
       }
     }

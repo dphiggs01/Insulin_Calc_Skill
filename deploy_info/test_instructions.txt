@@ -1,0 +1,124 @@
+User: Alexa, open insulin calculator
+
+Expected Skill Response 
+
+Speech: Welcome to the insulin dose calculator. The Insulin Calculator provides a straightforward and easy way to calculate insulin doses for people with diabetes You can ask: What is my blood sugar correction dose? Or How much insulin do I need if I am eating carbs? "
+
+** Note: A card is produced with similar content  
+
+
+==============================================================================
+
+== Fisrt time usage ==
+
+User: Alexa, ask Insulin Calculator What's my blood glucose correction dose?
+
+Skill: What is the your time zone? You can say: my time zone is Eastern or you can use any of the following time zones Pacific, Mountain, Central, Eastern, Alaskan, Hawaiian, or Arizona
+
+User: Eastern
+
+Skill: What is your current blood glucose level?
+
+User: two hundred
+
+Skill: What is your daytime target blood glucose level? 
+** Note: If the request is made between 5am and 8pm the skill will ask for daytime target else it will ask for nighttime target
+** example target daytime=100, nighttime=150
+
+User: one hundred fifty
+
+Skill: What is your daytime blood glucose correction factor?
+
+User: thirty
+
+Skill: Your current blood glucose level is 200. 
+       Your daytime target blood glucose level is 150.
+       Your daytime correction factor is 30.
+       Your correction dose is 2 units of insulin.
+
+** Note: A Card is produced with similary content
+
+
+== Second time usage ==
+
+User: Alexa, ask Insulin Calculator What's my blood glucose correction dose?
+
+Skill: What is your current blood glucose level?
+
+User: two hundred
+
+Skill: Your current blood glucose level is 200. 
+       Your daytime target blood glucose level is 150.
+       Your daytime correction factor is 30.
+       Your correction dose is 2 units of insulin.
+
+** Note: A Card is produced with similary content
+
+== One shot usage ==
+
+User: What's my blood glucose correction dose if my current level is two hundred?
+
+Skill: Your current blood glucose level is 200. 
+       Your daytime target blood glucose level is 150.
+       Your daytime correction factor is 30.
+       Your correction dose is 2 units of insulin.
+
+** Note: A Card is produced with similary content
+
+==============================================================
+
+== Fisrt time usage ==
+** Note: Time Zone is already saved
+
+User: Alexa, ask Insulin Calculator How much insulin do I need if I am eating carbs
+
+Skill: How many carbs will you be eating?
+
+User: sixty
+
+Skill: What is the number of carbs in your breakfast or am snack carb ratio?
+** Note: if the request is made between 4:30 a.m. - 11:30 a.m. it will ask for breakfast, 11:30 a.m - 4:30 p.m. lunch esle dinner ratio is requested
+** example ratio breakfast=6, lunch=8, dinner=10
+
+User: six
+
+Skill: You are consuming 60 carbs.
+       Using your breakfast insulin to carb ratio of 1 unit for 6 grams of carbs. 
+       You need 10 units of insulin.
+
+** Note ** A Card is produced with similary content
+
+== One shot usage ==
+** Note: breakfats ratio have all been stored
+
+User: Alexa, ask Insulin Calculator How many units of insulin do I need if I eat sixty grams of carbs?
+
+
+Skill: You are consuming 60 carbs.
+       Using your breakfast insulin to carb ratio of 1 unit for 6 grams of carbs. 
+       You need 10 units of insulin.
+
+** Note ** A Card is produced with similar content
+
+================================================================
+== One shot usage ==
+** Note: Time Zone, daytime target, daytime correction, breakfats ratio, have all been stored
+
+User: Alexa, ask Insulin Calculator to calculate dose with current blood glucose two hundred and eating sixty grams of carbs.
+
+Skill: Your current blood glucose level is 200. 
+       You are consuming 60 carbs. 
+       Your daytime target blood glucose level is 150. 
+       Your daytime correction factor is 30. 
+       Using your breakfast insulin to carb ratio of 1 unit for 6 grams of carbs. 
+       Your correction dose is 12 units of insulin.
+
+
+================================================================
+== One shot usage ==
+
+User: Alexa, tell Insulin Calculator to reset my stored values.
+
+Skill: OK I have reset the stored values in the insulin calculator.
+
+

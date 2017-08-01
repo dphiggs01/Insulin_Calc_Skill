@@ -1,26 +1,26 @@
 SHORT: The Insulin Calculator provides a straightforward and quick way calculate insulin doses for people with diabetes.
 
 
-The Insulin Calculator provides a straightforward and quick way calculate insulin doses for people with diabetes.
+The Insulin Calculator provides a straightforward and easy way to calculate insulin doses for people with diabetes.
 It is intended for educational purposes to help with standard insulin dose calculations.
 
 
-NOTE: The results provided by the Insulin Calculator are for educational purposes ONLY, all results should be
-externally calculated and confirmed before any insulin is consumed.
+NOTE: The results provided by the Insulin Calculator are for educational purposes ONLY. All results should be
+externally calculated and confirmed before any insulin is administered.
 
-NOTE: The Insulin Calculator requests "Account Linking" to determine your time-zone, no personal account
-information is required or collected.
 
-To get started... you can ask Alexa:
+Here are some of the ways you can use the skill -
 
-"Alexa, ask Insulin Calculator What's my blood glucose correction dose?"
-"Alexa, ask Insulin Calculator What's my blood glucose correction dose if my current level is two hundred?"
-"Alexa, ask Insulin Calculator How many units of insulin do I need if I eat sixty grams of carbs?"
-"Alexa, ask Insulin Calculator to calculate dose with current blood glucose two hundred and eating sixty grams of carbs."
+Alexa, ask Insulin Calculator What's my blood glucose correction dose?
+Alexa, ask Insulin Calculator What's my blood glucose correction dose if my current level is two hundred?
+
+Alexa, ask Insulin Calculator How much insulin do I need if I am eating carbs
+Alexa, ask Insulin Calculator How many units of insulin do I need if I eat sixty grams of carbs?
+
+Alexa, ask Insulin Calculator to calculate dose with current blood glucose two hundred and eating sixty grams of carbs.
 
 You can also reset stored data using the following command:
-
-"Alexa, tell Insulin Calculator to reset my stored values."
+Alexa, tell Insulin Calculator to reset my stored values.
 
 
 TEST Notes:

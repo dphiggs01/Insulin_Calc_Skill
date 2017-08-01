@@ -59,20 +59,13 @@
       "intent": "resetStoredValues"
     },
     {
-      "intent": "accountLinkIntent"
-    },
-    {
       "slots": [
         {
-          "name": "time",
-          "type": "AMAZON.TIME"
-        },
-        {
-          "name": "ampm",
-          "type": "ampm"
+          "name": "time_zone",
+          "type": "TIMEZONES"
         }
       ],
-      "intent": "setCurrentTime"
+      "intent": "setCurrentTimeZone"
     }
   ]
 }

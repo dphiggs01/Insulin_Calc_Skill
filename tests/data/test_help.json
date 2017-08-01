@@ -1,58 +1,57 @@
 { "request":
 {
-  "session": {
-    "sessionId": "SessionId.066e21c5-6af2-4d2c-84b3-88c796e5f520",
-    "application": {
-      "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
+    "context": {
+        "AudioPlayer": {
+            "playerActivity": "FINISHED"
+        },
+        "System": {
+            "apiEndpoint": "https://api.amazonalexa.com",
+            "application": {
+                "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
+            },
+            "device": {
+                "deviceId": "amzn1.ask.device.AEZBZNUSUYHHRH2M6UWDTYS7DP6OP6FCOQTWSTLS35ADFFPOGNGZOKWMYSYQKVAR4V2Q3DNY7TS4MLOXSM6LFJ5ES3GRSG4NBGQ3AGHYVI4LM3LJAUQCXPM263U2W43A2BRXRC6PS2C75GGWEY27ORBAOLUQ",
+                "supportedInterfaces": {
+                    "AudioPlayer": {}
+                }
+            },
+            "user": {
+                "userId": "amzn1.ask.account.AHMFDC2PHSM4R4RMRPXUAYVJNTV2YHYJIJAXDEQTWMRPEAJ7IVIV47323FRKL4HDIVKL7AN4KSYAQLD5RHU6UCXB5SJ2OEW4BTDQAHIDRC4BPMATFZT3M4RCJNAZIVNLN3RQFGVJ3EXHL262Q2ZKCTFUMPTVIQY7QAS7UPIACN2SXDFE4NDYG372NR6BSNFSGSG5WCACUTT6WRI"
+            }
+        }
     },
-    "attributes": {
-      "carb_ratio_breakfast": "6",
-      "target_bg_level_day": "100",
-      "time_adj": "4",
-      "terms_of_use": "agree",
-      "correction_factor_day": "30"
+    "request": {
+        "intent": {
+            "confirmationStatus": "NONE",
+            "name": "AMAZON.HelpIntent"
+        },
+        "locale": "en-US",
+        "requestId": "amzn1.echo-api.request.a712b087-bfb8-4416-802e-1d7d1f022907",
+        "timestamp": "2017-07-30T18:36:27Z",
+        "type": "IntentRequest"
     },
-    "user": {
-      "userId": "amzn1.ask.account.AH5IOJ4HZXJARKXBUSO2JJOVLD2E4XSNXKGIXO6XNFPHXYYH25TNVGF26RLWQWROXHEQEYQXDR52RLWODP4EP62P2VC3IB2522RZPE3IQXJYJHD3RNPC32VDVA4GU44S5YKTT4HXQQLPXWTSF6TVWAF3MRCPZMJYD5X4I6GUTEI2LHNGEYGWHTG23DVSVKCWYX6UODI6LJRSXHY"
+    "session": {
+        "application": {
+            "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
+        },
+        "attributes": {
+            "carb_ratio_lunch": "10",
+            "correction_factor_day": "30",
+            "target_bg_level_day": "150",
+            "time_adj": "-4",
+            "time_zone": "Eastern"
+        },
+        "new": false,
+        "sessionId": "amzn1.echo-api.session.c6baf5c2-1b5c-4277-9a50-e1285aec1bdf",
+        "user": {
+            "userId": "amzn1.ask.account.AHMFDC2PHSM4R4RMRPXUAYVJNTV2YHYJIJAXDEQTWMRPEAJ7IVIV47323FRKL4HDIVKL7AN4KSYAQLD5RHU6UCXB5SJ2OEW4BTDQAHIDRC4BPMATFZT3M4RCJNAZIVNLN3RQFGVJ3EXHL262Q2ZKCTFUMPTVIQY7QAS7UPIACN2SXDFE4NDYG372NR6BSNFSGSG5WCACUTT6WRI"
+        }
     },
-    "new": false
-  },
-  "request": {
-    "type": "IntentRequest",
-    "requestId": "EdwRequestId.c0fffb8b-4438-41b0-b80c-c7a54a8da53b",
-    "locale": "en-US",
-    "timestamp": "2017-06-16T14:09:38Z",
-    "intent": {
-      "name": "AMAZON.HelpIntent",
-      "slots": {}
-    }
-  },
-  "version": "1.0"
+    "version": "1.0"
 }
 
 , "response":
-{
-  "version": "1.0",
-  "response": {
-    "outputSpeech": {
-      "type": "SSML",
-      "ssml": "<speak><p>The insulin dose calculator helps you simplify your diabetes maintenance. </p><p>You can ask: What is my blood sugar correction dose? or How many units of insulin for thirty grams of carbs? </p><p>You can also combine your requests</p><p> you can do this by asking: Calculate dose with current blood glucose two hundred <break strength='strong'/> and forty grams of carbs </p><break strength='strong'/> <p>To help simplify future calculations The Insulin Calculator will remember a few constant factors like your carb ratios and your correction factors</p><p>To reset these values you can say: Please reset the stored values</p></speak>"
-    },
-    "reprompt": {
-      "outputSpeech": {
-        "type": "PlainText",
-        "text": "How can I help today? "
-      }
-    },
-    "shouldEndSession": false
-  },
-  "sessionAttributes": {
-    "carb_ratio_breakfast": "6",
-    "target_bg_level_day": "100",
-    "time_adj": "4",
-    "terms_of_use": "agree",
-    "correction_factor_day": "30"
-  }
-}
+{}
+
 }
 

@@ -4,6 +4,7 @@ import json
 import os
 
 class TestAlexaSkillBase(unittest.TestCase):
+
     """ Base class for Testing Alexa Skills
     """
     logger = logging.getLogger()
@@ -41,3 +42,9 @@ class TestAlexaSkillBase(unittest.TestCase):
             print("actual={}".format(dialog_response))
             print(msg)
             logging.debug(msg)
+
+def ignore_warnings(test_func):
+    def do_test(self, *args, **kwargs):
+        with logging.warnings.catch_warnings():
+            test_func(self, *args, **kwargs)
+    return do_test

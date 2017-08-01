@@ -1,48 +1,69 @@
-{ "request":
 {
-  "session": {
-    "sessionId": "SessionId.066e21c5-6af2-4d2c-84b3-88c796e5f520",
-    "application": {
-      "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
-    },
-    "attributes": {},
-    "user": {
-      "userId": "amzn1.ask.account.AH5IOJ4HZXJARKXBUSO2JJOVLD2E4XSNXKGIXO6XNFPHXYYH25TNVGF26RLWQWROXHEQEYQXDR52RLWODP4EP62P2VC3IB2522RZPE3IQXJYJHD3RNPC32VDVA4GU44S5YKTT4HXQQLPXWTSF6TVWAF3MRCPZMJYD5X4I6GUTEI2LHNGEYGWHTG23DVSVKCWYX6UODI6LJRSXHY"
-    },
-    "new": true
-  },
   "request": {
-    "type": "LaunchRequest",
-    "requestId": "EdwRequestId.b0324693-b555-463b-8bf2-570c24533d8c",
-    "locale": "en-US",
-    "timestamp": "2017-06-16T13:35:33Z"
-  },
-  "version": "1.0"
-}
-
-, "response":
-{
-  "version": "1.0",
-  "response": {
-    "outputSpeech": {
-      "type": "PlainText",
-      "text": "Welcome to the insulin dose calculator. Here you can get information simplifying your diabetes maintenance. You can ask: What is my blood sugar correction dose? or How many units of insulin for thirty grams of carbs?"
-    },
-    "reprompt": {
-      "outputSpeech": {
-        "type": "PlainText",
-        "text": "How can I help today? "
+    "context": {
+      "AudioPlayer": {
+        "playerActivity": "FINISHED"
+      },
+      "System": {
+        "apiEndpoint": "https://api.amazonalexa.com",
+        "application": {
+          "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
+        },
+        "device": {
+          "deviceId": "amzn1.ask.device.AEZBZNUSUYHHRH2M6UWDTYS7DP6OP6FCOQTWSTLS35ADFFPOGNGZOKWMYSYQKVAR4V2Q3DNY7TS4MLOXSM6LFJ5ES3GRSG4NBGQ3AGHYVI4LM3LJAUQCXPM263U2W43A2BRXRC6PS2C75GGWEY27ORBAOLUQ",
+          "supportedInterfaces": {
+            "AudioPlayer": {}
+          }
+        },
+        "user": {
+          "userId": "amzn1.ask.account.AHMFDC2PHSM4R4RMRPXUAYVJNTV2YHYJIJAXDEQTWMRPEAJ7IVIV47323FRKL4HDIVKL7AN4KSYAQLD5RHU6UCXB5SJ2OEW4BTDQAHIDRC4BPMATFZT3M4RCJNAZIVNLN3RQFGVJ3EXHL262Q2ZKCTFUMPTVIQY7QAS7UPIACN2SXDFE4NDYG372NR6BSNFSGSG5WCACUTT6WRI"
+        }
       }
     },
-    "shouldEndSession": false
+    "request": {
+      "locale": "en-US",
+      "requestId": "amzn1.echo-api.request.0f2f81c6-ceaf-4016-a96d-68b416b8a6af",
+      "timestamp": "2017-07-30T18:05:41Z",
+      "type": "LaunchRequest"
+    },
+    "session": {
+      "application": {
+        "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
+      },
+      "new": true,
+      "sessionId": "amzn1.echo-api.session.84262f8e-0ee0-43a4-8ab8-6e852ea2119a",
+      "user": {
+        "userId": "amzn1.ask.account.AHMFDC2PHSM4R4RMRPXUAYVJNTV2YHYJIJAXDEQTWMRPEAJ7IVIV47323FRKL4HDIVKL7AN4KSYAQLD5RHU6UCXB5SJ2OEW4BTDQAHIDRC4BPMATFZT3M4RCJNAZIVNLN3RQFGVJ3EXHL262Q2ZKCTFUMPTVIQY7QAS7UPIACN2SXDFE4NDYG372NR6BSNFSGSG5WCACUTT6WRI"
+      }
+    },
+    "version": "1.0"
   },
-  "sessionAttributes": {
-    "carb_ratio_breakfast": "6",
-    "target_bg_level_day": "100",
-    "time_adj": "4",
-    "terms_of_use": "agree",
-    "correction_factor_day": "30"
-  }
+  "response":
+          {
+    "response": {
+        "card": {
+            "image": {
+                "largeImageUrl": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_1200x800b.png",
+                "smallImageUrl": "https://s3.amazonaws.com/ilandapps-bucket-1/diabetes_icon_720x480b.png"
+            },
+            "text": "The Insulin Calculator provides a straightforward and easy way to calculate insulin  doses for people with diabetes. \n\nYou can ask: What is my blood sugar correction dose? Or How much insulin do I need if I am eating carbs?  \n\n",
+            "title": "Welcome to the Insulin Calculator.",
+            "type": "Standard"
+        },
+        "outputSpeech": {
+            "text": "Welcome to the insulin dose calculator. The Insulin Calculator provides a straightforward and easy way to calculate insulin doses for people with diabetes You can ask: What is my blood sugar correction dose? Or How much insulin do I need if I am eating carbs? ",
+            "type": "PlainText"
+        },
+        "reprompt": {
+            "outputSpeech": {
+                "text": "How can I help today? ",
+                "type": "PlainText"
+            }
+        },
+        "shouldEndSession": false
+    },
+    "sessionAttributes": {},
+    "version": "1.0"
 }
 }
 

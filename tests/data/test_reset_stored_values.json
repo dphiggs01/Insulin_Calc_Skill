@@ -1,38 +1,64 @@
+{ "request":
 {
-  "request": {
-    "session": {
-      "sessionId": "SessionId.c7fd39ec-ee55-418f-9b67-c45225ccfb01",
-      "application": {
-        "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
-      },
-      "attributes": {},
-      "user": {
-        "userId": "amzn1.ask.account.AH5IOJ4HZXJARKXBUSO2JJOVLD2E4XSNXKGIXO6XNFPHXYYH25TNVGF26RLWQWROXHEQEYQXDR52RLWODP4EP62P2VC3IB2522RZPE3IQXJYJHD3RNPC32VDVA4GU44S5YKTT4HXQQLPXWTSF6TVWAF3MRCPZMJYD5X4I6GUTEI2LHNGEYGWHTG23DVSVKCWYX6UODI6LJRSXHY"
-      },
-      "new": true
+    "context": {
+        "System": {
+            "apiEndpoint": "apiEndpoint",
+            "application": {
+                "applicationId": "applicationId"
+            },
+            "device": {
+                "deviceId": "deviceId",
+                "supportedInterfaces": {}
+            },
+            "user": {
+                "accessToken": "accessToken",
+                "permissions": {
+                    "consentToken": "consentToken"
+                },
+                "userId": "userId"
+            }
+        }
     },
     "request": {
-      "type": "IntentRequest",
-      "requestId": "EdwRequestId.480e857f-7163-40ad-8d67-a2b68dfee919",
-      "locale": "en-US",
-      "timestamp": "2017-06-16T14:26:45Z",
-      "intent": {
-        "name": "resetStoredValues",
-        "slots": {}
-      }
+        "intent": {
+            "name": "resetStoredValues",
+            "slots": {}
+        },
+        "locale": "en-US",
+        "requestId": "EdwRequestId.f4a1b547-09f0-4660-be5f-2b50f4f714a0",
+        "timestamp": 1501434043320,
+        "type": "IntentRequest"
+    },
+    "session": {
+        "application": {
+            "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
+        },
+        "attributes": {},
+        "new": true,
+        "sessionId": "SessionId.202806bb-68b6-41ed-a10a-1e123c2abca6",
+        "user": {
+            "accessToken": null,
+            "userId": "amzn1.ask.account.AHMFDC2PHSM4R4RMRPXUAYVJNTV2YHYJIJAXDEQTWMRPEAJ7IVIV47323FRKL4HDIVKL7AN4KSYAQLD5RHU6UCXB5SJ2OEW4BTDQAHIDRC4BPMATFZT3M4RCJNAZIVNLN3RQFGVJ3EXHL262Q2ZKCTFUMPTVIQY7QAS7UPIACN2SXDFE4NDYG372NR6BSNFSGSG5WCACUTT6WRI"
+        }
+    }
+
+
+  }
+, "response":
+{
+    "response": {
+        "outputSpeech": {
+            "text": "OK I have reset the stored values in the insulin calculator.",
+            "type": "PlainText"
+        },
+        "shouldEndSession": true
+    },
+    "sessionAttributes": {
+        "time_adj": "-4",
+        "time_zone": "Eastern"
     },
     "version": "1.0"
-  },
-  "response": {
-    "version": "1.0",
-    "response": {
-      "outputSpeech": {
-        "type": "PlainText",
-        "text": "OK I have reset the stored values in the insulin calculator."
-      },
-      "shouldEndSession": true
-    },
-    "sessionAttributes": {}
-  }
+}
+
 }
 

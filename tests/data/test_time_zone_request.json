@@ -1,5 +1,5 @@
 { "request":
-{
+        {
     "context": {
         "AudioPlayer": {
             "playerActivity": "STOPPED"
@@ -23,56 +23,35 @@
     "request": {
         "intent": {
             "confirmationStatus": "NONE",
-            "name": "requestedValue",
+            "name": "bloodGlucoseCorrection",
             "slots": {
-                "requested_value": {
+                "current_bg_level": {
                     "confirmationStatus": "NONE",
-                    "name": "requested_value",
-                    "value": "30"
+                    "name": "current_bg_level"
                 }
             }
         },
         "locale": "en-US",
-        "requestId": "amzn1.echo-api.request.dbe80d4d-48a8-44f8-970e-b4407bf5f1ae",
-        "timestamp": "2017-07-31T10:34:28Z",
+        "requestId": "amzn1.echo-api.request.cdb00655-d739-4096-b948-96127416c46a",
+        "timestamp": "2017-07-31T10:23:07Z",
         "type": "IntentRequest"
     },
     "session": {
         "application": {
             "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
         },
-        "attributes": {
-            "day_night": "day",
-            "established_dialog": [
-                {
-                    "current_bg_level": "200",
-                    "intent_name": "blood_glucose_correction",
-                    "requested_value": "150",
-                    "target_bg_level_day": "150",
-                    "time_zone": "Eastern"
-                },
-                {
-                    "intent_name": "requested_value_intent",
-                    "slot_name": "correction_factor_day"
-                }
-            ],
-            "time_adj": "-4",
-            "time_zone": "Eastern"
-        },
-        "new": false,
-        "sessionId": "amzn1.echo-api.session.9c2f7ad9-a08e-49f4-ad00-78db221c840a",
+        "new": true,
+        "sessionId": "amzn1.echo-api.session.43670b7c-c6e3-45c3-b15a-08fc0b8bf604",
         "user": {
-            "userId": "amzn1.ask.account.AHRLCI5U7MW3KEFDGIOUJMC2CFUPHKOV7NWPBX2TQSLHXDM3WVJSU7CPTAV75F36X6S4QPFKRWJFMRNA5WYDN7MPBALY6VMC3WNWBVZYWLS2DGT5XM4VKZBEMMSLEACK6Z75QV76LKEFZVKV7FFUG5ZK32HUWEQ3QLSW2TMYWAKWHKQ7TDH6GMN5ZZRZPN3K7VGAW2VG6URE4II"
+                "userId": "amzn1.ask.account.AHMFDC2PHSM4R4RMRPXUAYVJNTV2YHYJIJAXDEQTWMRPEAJ7IVIV47323FRKL4HDIVKL7AN4KSYAQLD5RHU6UCXB5SJ2OEW4BTDQAHIDRC4BPMATFZT3M4RCJNAZIVNLN3RQFGVJ3EXHL262Q2ZKCTFUMPTVIQY7QAS7UPIACN2SXDFE4NDYG372NR6BSNFSGSG5WCACUTT6WRI"
         }
     },
     "version": "1.0"
 }
 
-, "response":
 
-{
+, "response": {
 
-}
-
+  }
 }
 
