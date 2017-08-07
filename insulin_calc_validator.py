@@ -91,7 +91,7 @@ class ValidRangeCalories(Slot_Validator):
         if isinstance(value, str):
             try:
                 value = int(value)
-                if 1 < value <= 3000:
+                if 1 <= value <= 3000:
                     status_code = VALID
 
             except ValueError:

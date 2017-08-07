@@ -22,7 +22,7 @@ class DiabetesTest(TestAlexaSkillBase):
         # To Alexa: ask insulin calculator please reset the stored values
         request_dict, response_dict = self.get_request_response('test_reset_stored_values.json')
         dialog_response = self.dialog.begin(request_dict)
-        self.assertEqual("OK I have reset the stored values in the insulin calculator.",
+        self.assertEqual("You want to reset the stored values correct?",
                           dialog_response['response']['outputSpeech']['text'])
 
     def test_open_insulin_calculator(self):
@@ -80,6 +80,14 @@ class DiabetesTest(TestAlexaSkillBase):
         request_dict, response_dict = self.get_request_response('test_insulin_for_carbs.json')
         dialog_response = self.dialog.begin(request_dict)
         # logger.warning("REQUEST {}".format(json.dumps(dialog_response, sort_keys=True, indent=4)))
+        print(dialog_response)
         speech = dialog_response['response']['outputSpeech']['text'][-31:]
         self.assertEqual("You need 10 units of insulin.  ",
                          speech)
+
+    def test_error_case(self):
+        self.logger.debug("DiabetesTest.test_error_case")
+        # To Alexa: ask insulin calculator please reset the stored values
+        request_dict, response_dict = self.get_request_response('ERROR_TEST.json')
+        dialog_response = self.dialog.begin(request_dict)
+        print(dialog_response)

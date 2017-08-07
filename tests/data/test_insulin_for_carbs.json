@@ -1,75 +1,75 @@
-{ "request":
 {
+  "request": {
     "context": {
-        "AudioPlayer": {
-            "playerActivity": "STOPPED"
+      "AudioPlayer": {
+        "playerActivity": "STOPPED"
+      },
+      "System": {
+        "apiEndpoint": "https://api.amazonalexa.com",
+        "application": {
+          "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
         },
-        "System": {
-            "apiEndpoint": "https://api.amazonalexa.com",
-            "application": {
-                "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
-            },
-            "device": {
-                "deviceId": "amzn1.ask.device.AG5FQNIFH7LR2KLJ3XJEM722MB33456IGVKABSULYMWTTJ2Q5LCY355CRCFC66V3GTSYBUZ2P7LC6CZ6DUQMHCH4WAXCNHJLU2WQ7MDG72KVVOD57KARST4LQTBS2TB7RYN47VXLJ2246VDMFR33TPKGMWTA",
-                "supportedInterfaces": {
-                    "AudioPlayer": {}
-                }
-            },
-            "user": {
-                "userId": "amzn1.ask.account.AHRLCI5U7MW3KEFDGIOUJMC2CFUPHKOV7NWPBX2TQSLHXDM3WVJSU7CPTAV75F36X6S4QPFKRWJFMRNA5WYDN7MPBALY6VMC3WNWBVZYWLS2DGT5XM4VKZBEMMSLEACK6Z75QV76LKEFZVKV7FFUG5ZK32HUWEQ3QLSW2TMYWAKWHKQ7TDH6GMN5ZZRZPN3K7VGAW2VG6URE4II"
-            }
+        "device": {
+          "deviceId": "amzn1.ask.device.AG5FQNIFH7LR2KLJ3XJEM722MB33456IGVKABSULYMWTTJ2Q5LCY355CRCFC66V3GTSYBUZ2P7LC6CZ6DUQMHCH4WAXCNHJLU2WQ7MDG72KVVOD57KARST4LQTBS2TB7RYN47VXLJ2246VDMFR33TPKGMWTA",
+          "supportedInterfaces": {
+            "AudioPlayer": {}
+          }
+        },
+        "user": {
+          "userId": "amzn1.ask.account.AHRLCI5U7MW3KEFDGIOUJMC2CFUPHKOV7NWPBX2TQSLHXDM3WVJSU7CPTAV75F36X6S4QPFKRWJFMRNA5WYDN7MPBALY6VMC3WNWBVZYWLS2DGT5XM4VKZBEMMSLEACK6Z75QV76LKEFZVKV7FFUG5ZK32HUWEQ3QLSW2TMYWAKWHKQ7TDH6GMN5ZZRZPN3K7VGAW2VG6URE4II"
         }
+      }
     },
     "request": {
-        "intent": {
+      "intent": {
+        "confirmationStatus": "NONE",
+        "name": "requestedValue",
+        "slots": {
+          "requested_value": {
             "confirmationStatus": "NONE",
-            "name": "requestedValue",
-            "slots": {
-                "requested_value": {
-                    "confirmationStatus": "NONE",
-                    "name": "requested_value",
-                    "value": "6"
-                }
-            }
-        },
-        "locale": "en-US",
-        "requestId": "amzn1.echo-api.request.02ce16c3-0d22-4941-9c1c-8ef77b18732d",
-        "timestamp": "2017-07-31T11:34:30Z",
-        "type": "IntentRequest"
+            "name": "requested_value",
+            "value": "6"
+          }
+        }
+      },
+      "locale": "en-US",
+      "requestId": "amzn1.echo-api.request.02ce16c3-0d22-4941-9c1c-8ef77b18732d",
+      "timestamp": "2017-07-31T11:34:30Z",
+      "type": "IntentRequest"
     },
     "session": {
-        "application": {
-            "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
-        },
-        "attributes": {
-            "correction_factor_day": "30",
-            "established_dialog": [
-                {
-                    "carbs_being_eaten": "60",
-                    "intent_name": "insulin_for_carb_consumption",
-                    "time_zone": "Eastern"
-                },
-                {
-                    "intent_name": "requested_value_intent",
-                    "slot_name": "carb_ratio_breakfast"
-                }
-            ],
-            "mealtime": "breakfast",
-            "target_bg_level_day": "150",
-            "time_adj": "-4",
+      "application": {
+        "applicationId": "amzn1.ask.skill.c6fbf52b-8714-48f2-9fc3-20dec4f20b47"
+      },
+      "attributes": {
+        "correction_factor_day": "30",
+        "established_dialog": [
+          {
+            "carbs_being_eaten": "60",
+            "intent_name": "insulin_for_carb_consumption",
             "time_zone": "Eastern"
-        },
-        "new": false,
-        "sessionId": "amzn1.echo-api.session.6e734e07-4800-432c-99a1-adb9a50754ed",
-        "user": {
-            "userId": "amzn1.ask.account.AHRLCI5U7MW3KEFDGIOUJMC2CFUPHKOV7NWPBX2TQSLHXDM3WVJSU7CPTAV75F36X6S4QPFKRWJFMRNA5WYDN7MPBALY6VMC3WNWBVZYWLS2DGT5XM4VKZBEMMSLEACK6Z75QV76LKEFZVKV7FFUG5ZK32HUWEQ3QLSW2TMYWAKWHKQ7TDH6GMN5ZZRZPN3K7VGAW2VG6URE4II"
-        }
+          },
+          {
+            "intent_name": "requested_value_intent",
+            "slot_name": "carb_ratio_breakfast"
+          }
+        ],
+        "mealtime": "breakfast",
+        "target_bg_level_day": "150",
+        "carb_ratio_breakfast": "6",
+        "carb_ratio_lunch": "6",
+        "carb_ratio_dinner": "6",
+        "time_adj": "-4",
+        "time_zone": "Eastern"
+      },
+      "new": false,
+      "sessionId": "amzn1.echo-api.session.6e734e07-4800-432c-99a1-adb9a50754ed",
+      "user": {
+        "userId": "amzn1.ask.account.AHRLCI5U7MW3KEFDGIOUJMC2CFUPHKOV7NWPBX2TQSLHXDM3WVJSU7CPTAV75F36X6S4QPFKRWJFMRNA5WYDN7MPBALY6VMC3WNWBVZYWLS2DGT5XM4VKZBEMMSLEACK6Z75QV76LKEFZVKV7FFUG5ZK32HUWEQ3QLSW2TMYWAKWHKQ7TDH6GMN5ZZRZPN3K7VGAW2VG6URE4II"
+      }
     },
     "version": "1.0"
-}
-
-
-, "response":
-{}
+  },
+  "response": {}
 }
 

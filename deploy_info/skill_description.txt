@@ -14,7 +14,7 @@ Here are some of the ways you can use the skill -
 Alexa, ask Insulin Calculator What's my blood glucose correction dose?
 Alexa, ask Insulin Calculator What's my blood glucose correction dose if my current level is two hundred?
 
-Alexa, ask Insulin Calculator How much insulin do I need if I am eating carbs
+Alexa, ask Insulin Calculator How much insulin do I need if I am eating carbs?
 Alexa, ask Insulin Calculator How many units of insulin do I need if I eat sixty grams of carbs?
 
 Alexa, ask Insulin Calculator to calculate dose with current blood glucose two hundred and eating sixty grams of carbs.
