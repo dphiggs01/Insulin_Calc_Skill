@@ -33,6 +33,7 @@ class InsulinCalcSkill(StackDialogManager):
         target_bg_level = self.request.attributes['target_bg_level_' + suffix]
         correction_factor = self.request.attributes['correction_factor_' + suffix]
 
+
         # Move fields_to_persist to the session scope for db persistence
         self.session.attributes['target_bg_level_' + suffix] = target_bg_level
         self.session.attributes['correction_factor_' + suffix] = correction_factor
